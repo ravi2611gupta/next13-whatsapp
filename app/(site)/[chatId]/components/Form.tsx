@@ -1,5 +1,6 @@
-import Input from "@/app/components/Input";
 import { DocumentPlusIcon, MicrophoneIcon, PaperAirplaneIcon, PhotoIcon } from "@heroicons/react/24/solid";
+
+import Input from "@/app/components/Input";
 
 const Form = () => {
   return ( 
@@ -9,7 +10,7 @@ const Form = () => {
       <DocumentPlusIcon className="h-8 text-sky-500" />
       <Input placeholder="Write a message" />
       <div className="rounded-full p-2 bg-sky-500 cursor-pointer hover:bg-sky-600 transition">
-        <PaperAirplaneIcon className="h-6 text-white" />
+        <PaperAirplaneIcon className="lg:h-5 h-4 text-white" />
       </div>
     </div>
   );

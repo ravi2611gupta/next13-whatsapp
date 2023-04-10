@@ -1,4 +1,4 @@
-import Messenger from "../components/Messenger";
+import Messenger from "./components/Messenger";
 
 const ChatId = () => {
   return ( 
