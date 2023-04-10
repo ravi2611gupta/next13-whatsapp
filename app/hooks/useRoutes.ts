@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useParams, usePathname } from "next/navigation";
-import { ChatBubbleLeftRightIcon, UsersIcon } from "@heroicons/react/24/outline";
+import { ChatBubbleOvalLeftIcon, UsersIcon } from "@heroicons/react/24/solid";
 
 const useRoutes = () => {
   const pathname = usePathname();
@@ -10,7 +10,7 @@ const useRoutes = () => {
     { 
       label: 'Chat', 
       href: '/', 
-      icon: ChatBubbleLeftRightIcon,
+      icon: ChatBubbleOvalLeftIcon,
       active: pathname === '/' || !!params.chatId
     },
     { 

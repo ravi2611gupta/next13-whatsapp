@@ -13,24 +13,24 @@ const Input: React.FC<InputProps> = ({ icon: Icon, placeholder }) => {
           absolute
           left-3
           top-[10px]
-          h-6 
-          text-gray-300
+          h-5 
+          text-gray-400
         "
       />)}
       <input
         placeholder={placeholder}
         className={
           classNames(`
-            text-gray-500
-            text-sm
-            py-3
+            text-black
+            font-light
+            py-2
             px-4
             bg-neutral-100 
             w-full 
-            rounded-xl
+            rounded-full
             focus:outline-none
           `,
-          Icon && 'pl-11'
+          Icon && 'pl-10'
         )
         }
       />

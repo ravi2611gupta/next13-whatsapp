@@ -13,19 +13,16 @@ interface DesktopItemProps {
 
 const DesktopItem: React.FC<DesktopItemProps> = ({ label, href, icon: Icon, active }) => {
   return ( 
-    <li key={label} className="xl:w-full">
+    <li key={label}>
       <Link
         href={href}
         className={classNames(
-          active ? 'bg-emerald-800 text-white' : 'text-white hover:text-white hover:bg-emerald-800',
+          active ? 'bg-gray-100 text-black' : 'text-gray-500 hover:text-black hover:bg-gray-100',
           'group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold'
         )}
       >
         <Icon className="h-6 w-6 shrink-0" aria-hidden="true" />
         <span className="sr-only">{label}</span>
-        <div className="hidden xl:block">
-          {label}
-        </div>
       </Link>
     </li>
    );

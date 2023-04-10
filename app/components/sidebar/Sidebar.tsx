@@ -1,6 +1,5 @@
-import SidebarMobile from './SidebarMobile';
-import SidebarDesktop from './SidebarDesktop';
-import SidebarTop from './SidebarTop';
+import DesktopSidebar from './DesktopSidebar';
+import MobileFooter from './MobileFooter';
 
 interface SidebarProps {
   children: React.ReactNode;
@@ -9,10 +8,9 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   return (
     <div className="h-full">
-      <SidebarMobile />
-      <SidebarDesktop />
-      <SidebarTop />
-      <main className="lg:pl-20 xl:pl-72 h-full">
+      <DesktopSidebar />
+      <MobileFooter />
+      <main className="lg:pl-20 h-full">
         {children}
       </main>
     </div>

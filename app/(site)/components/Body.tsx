@@ -14,7 +14,7 @@ const Body = () => {
               11:00 AM
             </div>
           </div>
-          <div className="p-4 bg-gray-100 rounded-xl">
+          <div className="p-2 bg-gray-100 rounded-xl text-sm w-fit">
             Hello There!
           </div>
         </div>
@@ -32,7 +32,7 @@ const Body = () => {
               11:00 AM
             </div>
           </div>
-          <div className="p-4 bg-emerald-500 rounded-xl text-white">
+          <div className="p-2 w-fit text-sm bg-sky-500 rounded-xl text-white">
             Hello There!
           </div>
         </div>
@@ -50,7 +50,7 @@ const Body = () => {
               11:00 AM
             </div>
           </div>
-          <div className="overflow-hidden bg-emerald-500 rounded-xl text-white aspect-auto">
+          <div className="overflow-hidden bg-sky-500 rounded-xl text-white aspect-auto">
             <img className="h-72" src="https://tailwindui.com/img/ecommerce-images/category-page-01-image-card-01.jpg" />
           </div>
         </div>

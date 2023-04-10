@@ -1,11 +1,7 @@
-'use client';
-
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import Input from "../../components/Input";
 import ChatBox from "../../components/ChatBox";
-import useChat from "@/app/hooks/useChat";
-import { classNames } from "@/app/helpers";
 
 const people = [
   {
@@ -32,36 +28,25 @@ const people = [
 ]
 
 const List = () => {
-  const { isOpen } = useChat();
-
   return ( 
-    <aside className={classNames(`
-      fixed 
-      inset-y-0 
-      pb-20
-      lg:pb-0
-      lg:left-20 
-      lg:w-80 
-      lg:block
-      overflow-y-auto 
-      border-r 
-      border-gray-200 
-    `, isOpen ? 'hidden' : 'block w-full left-0')}>
+    <aside className="pb-20lg:pb-0 fixed inset-y-0 lg:left-20 w-full lg:w-80 overflow-y-auto border-r border-gray-200 lg:block">
       <div className="px-5">
         <div className="flex-col">
           <div className="text-2xl font-bold text-neutral-800 pt-4">
-            Messages
+            People
           </div>
           <div className="my-2">
             <Input icon={MagnifyingGlassIcon} placeholder="Search" />
           </div>
+        </div>
+        <div className="text-sm text-neutral-500 font-light my-4">
+          Active (3)
         </div>
         {people.map((person) => (
           <ChatBox
             imageUrl={person.imageUrl}
             name={person.name}
             key={person.email}
-            message={person.role}
           />
         ))}
       </div>
