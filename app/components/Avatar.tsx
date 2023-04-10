@@ -1,16 +1,22 @@
+import { classNames } from "../helpers";
+
 interface AvatarProps {
   src: string;
+  large?: boolean;
 };
 
-const Avatar: React.FC<AvatarProps> = ({ src }) => {
+const Avatar: React.FC<AvatarProps> = ({ src, large }) => {
+  const imgClass = classNames('rounded-full', large ? 'h-24 w-24' : 'h-11 w-11');
+  const dotClass = classNames('absolute block rounded-full bg-green-500 ring-2 ring-white top-0 right-0', large ? 'h-6 w-6' : 'h-3 w-3')
+
   return ( 
     <span className="relative inline-block">
       <img
-        className="h-11 w-11 rounded-full"
+        className={imgClass}
         src={src}
         alt=""
       />
-    <span className="absolute right-0 top-0 block h-3 w-3 rounded-full bg-green-500 ring-2 ring-white" />
+    <span className={dotClass} />
   </span>
   );
 }

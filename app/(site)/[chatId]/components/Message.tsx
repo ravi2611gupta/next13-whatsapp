@@ -1,5 +1,9 @@
+'use client';
+
 import Avatar from "@/app/components/Avatar";
 import { classNames } from "@/app/helpers";
+import { useState } from "react";
+import ImageModal from "./ImageModal";
 
 interface MessageProps {
   isOwn?: boolean;
@@ -7,6 +11,8 @@ interface MessageProps {
 }
 
 const Message: React.FC<MessageProps> = ({ isOwn, imageSrc }) => {
+  const [imageModalOpen, setImageModalOpen] = useState(false);
+
   const container = classNames('flex gap-3 p-4', isOwn ? 'justify-end' : '');
   const avatar = classNames(isOwn ? 'order-2' : '');
   const body = classNames('flex flex-col gap-2', isOwn ? 'items-end' : '');
@@ -27,7 +33,8 @@ const Message: React.FC<MessageProps> = ({ isOwn, imageSrc }) => {
           </div>
         </div>
         <div className={message}>
-          {imageSrc ? <img src={imageSrc} className="h-72" /> : 'Hello There!'}
+          <ImageModal src={imageSrc} isOpen={imageModalOpen} onClose={() => setImageModalOpen(false)} />
+          {imageSrc ? <img onClick={() => setImageModalOpen(true)} src={imageSrc} className="h-72 cursor-pointer hover:scale-110 transition translate" /> : 'Hello There!'}
         </div>
       </div>
     </div>
