@@ -10,9 +10,10 @@ import { classNames } from "@/app/helpers";
 
 interface ListProps {
   items: any[];
+  title?: string;
 }
 
-const List: React.FC<ListProps> = ({ items }) => {
+const List: React.FC<ListProps> = ({ items, title }) => {
   const { isOpen } = useChat();
 
   return ( 
@@ -31,7 +32,7 @@ const List: React.FC<ListProps> = ({ items }) => {
       <div className="px-5">
         <div className="flex-col">
           <div className="text-2xl font-bold text-neutral-800 pt-4">
-            Messages
+            {title}
           </div>
           <div className="my-2">
             <Input icon={MagnifyingGlassIcon} placeholder="Search" />

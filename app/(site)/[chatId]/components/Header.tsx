@@ -4,7 +4,6 @@ import { ChevronLeftIcon, EllipsisHorizontalIcon } from "@heroicons/react/24/out
 
 import Avatar from "@/app/components/Avatar";
 import Link from "next/link";
-import Options from "./Options";
 import { useState } from "react";
 import ProfileDrawer from "./ProfileDrawer";
 

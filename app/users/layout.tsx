@@ -28,7 +28,7 @@ export default function UsersLayout({
 }) {
   return (
     <div className="h-full">
-      <List items={people} />
+      <List title="People" items={people} />
       {children}
     </div>
   );

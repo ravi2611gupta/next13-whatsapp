@@ -32,7 +32,7 @@ export default function HomeLayout({
 }) {
   return (
     <div className="h-full">
-      <List items={people} />
+      <List title="Messages" items={people} />
       {children}
     </div>
   );
