@@ -1,17 +1,41 @@
-'use client';
+import AuthForm from "./components/AuthForm";
 
-import { classNames } from "../helpers";
-import useChat from "../hooks/useChat";
-import EmptyState from "../components/EmptyState";
-
-const Home = () => {
-  const { isOpen } = useChat();
-
+const Auth = () => {
   return (
-    <div className={classNames('lg:pl-80 h-full lg:block', isOpen ? 'block' : 'hidden')}>
-      <EmptyState />
-    </div>
+    <div 
+      className="
+        flex 
+        min-h-full 
+        flex-col 
+        justify-center 
+        py-12 
+        sm:px-6 
+        lg:px-8 
+        bg-gray-100
+      "
+    >
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <img
+          className="mx-auto h-12 w-auto"
+          src="/images/logo.png"
+          alt="Your Company"
+        />
+        <h2 
+          className="
+            mt-6 
+            text-center 
+            text-3xl 
+            font-bold 
+            tracking-tight 
+            text-gray-900
+          "
+          >
+            Sign in to your account
+        </h2>
+      </div>
+      <AuthForm />      
+  </div>
   )
 }
 
-export default Home;
+export default Auth;

@@ -1,4 +1,5 @@
 import List from "../components/List";
+import Sidebar from "../components/sidebar/Sidebar";
 
 
 const people = [
@@ -31,9 +32,11 @@ export default function HomeLayout({
   children: React.ReactNode,
 }) {
   return (
-    <div className="h-full">
-      <List title="Messages" items={people} />
-      {children}
-    </div>
+    <Sidebar>
+      <div className="h-full">
+        <List title="Messages" items={people} />
+        {children}
+      </div>
+    </Sidebar>
   );
 }
