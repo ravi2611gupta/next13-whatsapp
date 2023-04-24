@@ -1,14 +1,20 @@
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+
 interface AuthInputProps {
   label: string;
   id: string;
-  required?: boolean;
   type?: string;
+  required?: boolean;
+  register: UseFormRegister<FieldValues>,
+  errors: FieldErrors
 }
 
 const AuthInput: React.FC<AuthInputProps> = ({
   label,
   id,
+  register,
   required,
+  errors,
   type = 'text'
 }) => {
   return ( 
@@ -28,11 +34,10 @@ const AuthInput: React.FC<AuthInputProps> = ({
       <div className="mt-2">
         <input
           id={id}
-          name={id}
           type={type}
           autoComplete={id}
-          required
-          className="
+          {...register(id, { required })}
+          className={`
             block 
             w-full 
             rounded-md 
@@ -49,7 +54,8 @@ const AuthInput: React.FC<AuthInputProps> = ({
             focus:ring-sky-600 
             sm:text-sm 
             sm:leading-6
-          "
+            ${errors[id] ? 'focus:ring-rose-500' : 'focus:ring-sky-600'}
+          `}
         />
       </div>
     </div>

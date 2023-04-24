@@ -26,7 +26,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ name, imageUrl, message }) => {
     >
       <Avatar src={imageUrl} />
       <div className="min-w-0 flex-1">
-        <Link href="/123" className="focus:outline-none">
+        <Link href="/conversations/123" className="focus:outline-none">
           <span className="absolute inset-0" aria-hidden="true" />
           <div className="flex justify-between items-center mb-1">
             <p className="text-sm font-medium text-gray-900">{name}</p>

@@ -1,7 +1,11 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import axios from "axios";
+import { signIn, useSession } from 'next-auth/react';
+import { useCallback, useEffect, useState } from 'react';
 import { BsFacebook, BsTwitter, BsGithub  } from 'react-icons/bs';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { useRouter } from "next/navigation";
 
 import AuthInput from "./AuthInput";
 import AuthSocialButton from './AuthSocialButton';
@@ -9,7 +13,15 @@ import AuthSocialButton from './AuthSocialButton';
 type Variant = 'LOGIN' | 'REGISTER';
 
 const AuthForm = () => {
+  const session = useSession();
+  const router = useRouter();
   const [variant, setVariant] = useState<Variant>('LOGIN');
+
+  useEffect(() => {
+    if (session?.status === 'authenticated') {
+      router.push('/conversations')
+    }
+  }, [session?.status, router]);
 
   const toggleVariant = useCallback(() => {
     if (variant === 'LOGIN') {
@@ -19,15 +31,58 @@ const AuthForm = () => {
     }
   }, [variant]);
 
+  const {
+    register,
+    handleSubmit,
+    formState: {
+      errors,
+    }
+  } = useForm<FieldValues>({
+    defaultValues: {
+      name: '',
+      email: '',
+      password: ''
+    }
+  });
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    if (variant === 'REGISTER') {
+      axios.post('/api/register', data)
+      .then(() => router.push('/conversations'));
+    }
+
+    if (variant === 'LOGIN') {
+      signIn('credentials', data)
+      .then(() => router.push('/conversations'));
+    }
+  }
+
   return ( 
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               {variant === 'REGISTER' && (
-                <AuthInput id="name" label="Name" />
+                <AuthInput 
+                  register={register}
+                  errors={errors}
+                  id="name" 
+                  label="Name"
+                />
               )}
-              <AuthInput id="email" label="Email address" type="email" />
-              <AuthInput id="password" label="Password" type="password" />
+              <AuthInput 
+                register={register}
+                errors={errors}
+                id="email" 
+                label="Email address" 
+                type="email"
+              />
+              <AuthInput 
+                register={register}
+                errors={errors}
+                id="password" 
+                label="Password" 
+                type="password"
+              />
               <div>
                 <button
                   type="submit"

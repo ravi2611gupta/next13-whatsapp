@@ -1,4 +1,5 @@
 import './globals.css'
+import AuthContext from './context/AuthContext'
 
 export const metadata = {
   title: 'Messenger',
@@ -12,8 +13,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body >
-        {children}
+      <body>
+        <AuthContext>
+          {children}
+        </AuthContext>
       </body>
     </html>
   )

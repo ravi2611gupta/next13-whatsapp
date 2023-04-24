@@ -9,9 +9,9 @@ const useRoutes = () => {
   const routes = useMemo(() => [
     { 
       label: 'Chat', 
-      href: '/', 
+      href: '/conversations', 
       icon: ChatBubbleOvalLeftIcon,
-      active: pathname === '/' || !!params.chatId
+      active: pathname === '/conversations' || !!params.chatId
     },
     { 
       label: 'Users', 
