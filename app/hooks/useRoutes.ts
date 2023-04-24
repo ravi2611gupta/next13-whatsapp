@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useParams, usePathname } from "next/navigation";
-import { ChatBubbleOvalLeftIcon, UsersIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftOnRectangleIcon, ChatBubbleOvalLeftIcon, UsersIcon } from "@heroicons/react/24/solid";
+import { signOut } from "next-auth/react";
 
 const useRoutes = () => {
   const pathname = usePathname();
@@ -18,6 +19,12 @@ const useRoutes = () => {
       href: '/users', 
       icon: UsersIcon, 
       active: pathname === '/users'
+    },
+    { 
+      label: 'Logout', 
+      onClick: () => signOut(),
+      href: '#',
+      icon: ArrowLeftOnRectangleIcon, 
     }
   ], [pathname, params]);
 

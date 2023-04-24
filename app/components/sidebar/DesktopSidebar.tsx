@@ -3,7 +3,6 @@
 import DesktopItem from "./DesktopItem";
 import useRoutes from "@/app/hooks/useRoutes";
 
-
 const DesktopSidebar = () => {
   const routes = useRoutes();
 
@@ -31,6 +30,7 @@ const DesktopSidebar = () => {
               label={item.label}
               icon={item.icon}
               active={item.active}
+              onClick={item.onClick}
             />
           ))}
         </ul>

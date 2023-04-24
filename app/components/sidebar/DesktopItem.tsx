@@ -4,14 +4,27 @@ import { classNames } from "@/app/helpers";
 
 interface DesktopItemProps {
   label: string;
-  href: string;
   icon: any;
+  href: string;
+  onClick?: () => void;
   active?: boolean;
 }
 
-const DesktopItem: React.FC<DesktopItemProps> = ({ label, href, icon: Icon, active }) => {
+const DesktopItem: React.FC<DesktopItemProps> = ({ 
+  label, 
+  href, 
+  icon: Icon, 
+  active,
+  onClick
+}) => {
+  const handleClick = () => {
+    if (onClick) {
+      return onClick();
+    }
+  };
+
   return ( 
-    <li key={label}>
+    <li onClick={handleClick} key={label}>
       <Link
         href={href}
         className={classNames(
