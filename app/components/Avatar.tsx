@@ -1,7 +1,7 @@
 import { classNames } from "../helpers";
 
 interface AvatarProps {
-  src: string;
+  src?: string | null;
   large?: boolean;
 };
 
@@ -13,7 +13,7 @@ const Avatar: React.FC<AvatarProps> = ({ src, large }) => {
     <span className="relative inline-block">
       <img
         className={imgClass}
-        src={src}
+        src={src || '/images/placeholder.jpg'}
         alt=""
       />
     <span className={dotClass} />

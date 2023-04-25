@@ -6,21 +6,30 @@ import Avatar from "@/app/components/Avatar";
 import Link from "next/link";
 import { useState } from "react";
 import ProfileDrawer from "./ProfileDrawer";
+import { Conversation, User } from "@prisma/client";
+import useOtherUser from "@/app/hooks/useOtherUser";
 
-const Header = () => {
+interface HeaderProps {
+  conversation: Conversation & {
+    users: User[]
+  };
+}
+
+const Header: React.FC<HeaderProps> = ({ conversation }) => {
+  const otherUser = useOtherUser(conversation);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
   <>
-    <ProfileDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
+    <ProfileDrawer user={otherUser} isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
     <div className="bg-white w-full flex border-b-[1px] sm:px-4 py-3 px-4 lg:px-6 justify-between items-center shadow-sm">
       <div className="flex gap-3 items-center">
         <Link href="/" className="lg:hidden block text-sky-500 hover:text-sky-600 transition cursor-pointer">
           <ChevronLeftIcon className="h-6" />
         </Link>
-        <Avatar src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" />
+        <Avatar src={otherUser.image} />
         <div className="flex flex-col">
-          <div>Leslie Alexander</div>
+          <div>{otherUser.name}</div>
           <div className="text-sm font-light text-neutral-500">Active</div>
         </div>
       </div>

@@ -2,18 +2,19 @@
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-import Input from "./Input";
-import ChatBox from "./ChatBox";
+import Input from "../../components/Input";
 
 import useChat from "@/app/hooks/useChat";
 import { classNames } from "@/app/helpers";
+import { Conversation, User } from "@prisma/client";
+import ConversationBox from "./ConversationBox";
 
-interface ListProps {
-  items: any[];
+interface ConversationListProps {
+  items: (Conversation & { users: User[] })[];
   title?: string;
 }
 
-const List: React.FC<ListProps> = ({ items, title }) => {
+const ConversationList: React.FC<ConversationListProps> = ({ items, title }) => {
   const { isOpen } = useChat();
 
   return ( 
@@ -39,11 +40,9 @@ const List: React.FC<ListProps> = ({ items, title }) => {
           </div>
         </div>
         {items.map((item) => (
-          <ChatBox
-            imageUrl={item.imageUrl}
-            name={item.name}
-            key={item.email}
-            message={item.role}
+          <ConversationBox
+            key={item.id}
+            data={item}
           />
         ))}
       </div>
@@ -51,4 +50,4 @@ const List: React.FC<ListProps> = ({ items, title }) => {
    );
 }
  
-export default List;
+export default ConversationList;

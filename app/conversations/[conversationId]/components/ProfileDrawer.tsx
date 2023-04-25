@@ -1,22 +1,30 @@
 'use client';
 
-import { Fragment, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import Avatar from '@/app/components/Avatar';
-import { BellSlashIcon, EnvelopeIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { BellSlashIcon, TrashIcon } from '@heroicons/react/24/solid';
 import ConfirmModal from './ConfirmModal';
+import { User } from '@prisma/client';
+import { format } from 'date-fns';
 
 interface ProfileDrawerProps {
   isOpen: boolean;
   onClose: () => void;
+  user: User
 }
 
 const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
   isOpen,
   onClose,
+  user,
 }) => {
   const [confirmOpen, setConfirmOpen] = useState(false);
+  
+  const joinedDate = useMemo(() => {
+    return format(new Date(user.createdAt), 'PP');
+  }, [user.createdAt]);
 
   return (
     <>
@@ -66,10 +74,10 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                       <div className="relative mt-6 flex-1 px-4 sm:px-6">
                         <div className="flex flex-col items-center">
                           <div>
-                            <Avatar large src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" />
+                            <Avatar large src={user.image} />
                           </div>
                           <div>
-                            Leslie Alexander
+                            {user.name}
                           </div>
                           <div className="text-sm text-gray-500">
                             Active
@@ -92,30 +100,17 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                               </div>
                             </div>
                           </div>
-                        <div className="px-4 pb-5 pt-5 sm:px-0 sm:pt-0">
+                        <div className="w-full pb-5 pt-5 sm:px-0 sm:pt-0">
                         <dl className="space-y-8 px-4 sm:space-y-6 sm:px-6">
                           <div>
-                            <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Bio</dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
-                              <p>
-                                Enim feugiat ut ipsum, neque ut. Tristique mi id elementum praesent. Gravida in tempus
-                                feugiat netus enim aliquet a, quam scelerisque. Dictumst in convallis nec in bibendum
-                                aenean arcu.
-                              </p>
-                            </dd>
-                          </div>
-                          <div>
-                            <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Location</dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">New York, NY, USA</dd>
-                          </div>
-                          <div>
                             <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Email</dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">erdeljac.antonio@gmail.com</dd>
+                            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">{user.email}</dd>
                           </div>
+                          <hr />
                           <div>
                             <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Joined</dt>
                             <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
-                              <time dateTime="1988-06-23">June 23, 1988</time>
+                              <time dateTime="1988-06-23">{joinedDate}</time>
                             </dd>
                           </div>
                         </dl>
