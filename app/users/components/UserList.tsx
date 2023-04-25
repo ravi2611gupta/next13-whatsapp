@@ -36,7 +36,7 @@ const UserList: React.FC<UserListProps> = ({ items, title }) => {
             {title}
           </div>
           <div className="my-2">
-            <Input icon={MagnifyingGlassIcon} placeholder="Search" />
+            {/* <Input register={() => ([])} icon={MagnifyingGlassIcon} placeholder="Search" /> */}
           </div>
         </div>
         {items.map((item) => (

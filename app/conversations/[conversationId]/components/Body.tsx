@@ -1,13 +1,20 @@
 import Avatar from "@/app/components/Avatar";
-import Message from "./Message";
+import MessageBox from "./MessageBox";
+import { Message } from "@prisma/client";
 
-const Body = () => {
+interface BodyProps {
+  messages: Message[];
+}
+
+const Body: React.FC<BodyProps> = ({ messages = [] }) => {
   return ( 
     <div className="flex-1 overflow-y-auto">
-      <Message />
-      <Message isOwn />
-      <Message imageSrc="https://tailwindui.com/img/ecommerce-images/category-page-01-image-card-01.jpg" />
-      <Message isOwn imageSrc="https://tailwindui.com/img/ecommerce-images/category-page-01-image-card-01.jpg" />
+      {messages.map((message) => (
+        <MessageBox key={message.id} data={message} />
+      ))}
+      {/* <MessageBox isOwn />
+      <MessageBox imageSrc="https://tailwindui.com/img/ecommerce-images/category-page-01-image-card-01.jpg" />
+      <MessageBox isOwn imageSrc="https://tailwindui.com/img/ecommerce-images/category-page-01-image-card-01.jpg" /> */}
     </div>
    );
 }
