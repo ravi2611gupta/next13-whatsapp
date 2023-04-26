@@ -44,6 +44,18 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ data, selected }) => 
     return seenBy.indexOf(userEmail) !== -1
   }, [userEmail, data.seenBy]);
 
+  const lastMessageText = useMemo(() => {
+    if (lastMessage?.imageUrl) {
+      return 'Sent an image';
+    }
+
+    if (lastMessage?.body) {
+      return lastMessage?.body
+    }
+
+    return 'Started a conversation';
+  }, [lastMessage]);
+
   return ( 
     <div
       onClick={handleClick}
@@ -71,7 +83,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ data, selected }) => 
               <p className="text-xs text-gray-400 font-light">{format(new Date(lastMessage.createdAt), 'p')}</p>
             )}
           </div>
-          <p className={`truncate text-sm ${hasSeen? 'text-gray-500' : 'text-black font-medium'}`}>{lastMessage?.body}</p>
+          <p className={`truncate text-sm ${hasSeen? 'text-gray-500' : 'text-black font-medium'}`}>{lastMessageText}</p>
         </div>
       </div>
     </div>

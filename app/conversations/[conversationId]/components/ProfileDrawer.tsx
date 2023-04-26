@@ -4,7 +4,7 @@ import { Fragment, useMemo, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import Avatar from '@/app/components/Avatar';
-import { BellSlashIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { TrashIcon } from '@heroicons/react/24/solid';
 import ConfirmModal from './ConfirmModal';
 import { User } from '@prisma/client';
 import { format } from 'date-fns';
@@ -83,14 +83,6 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                             Active
                           </div>
                           <div className="flex gap-10 my-8">
-                            <div className="flex flex-col gap-3 items-center cursor-pointer hover:opacity-75">
-                              <div className="w-10 h-10 bg-neutral-100 rounded-full flex items-center justify-center">
-                                <BellSlashIcon className="h-5" />
-                              </div>
-                              <div className="text-sm font-light text-neutral-600">
-                                Mute
-                              </div>
-                            </div>
                             <div onClick={() => setConfirmOpen(true)} className="flex flex-col gap-3 items-center cursor-pointer hover:opacity-75">
                               <div className="w-10 h-10 bg-neutral-100 rounded-full flex items-center justify-center">
                                 <TrashIcon className="h-5" />
