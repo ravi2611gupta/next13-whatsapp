@@ -21,7 +21,8 @@ const getConversations = cache(async () => {
         }
       },
       include: {
-        users: true
+        users: true,
+        messages: true,
       }
     });
 

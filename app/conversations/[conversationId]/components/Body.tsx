@@ -1,9 +1,8 @@
-import Avatar from "@/app/components/Avatar";
 import MessageBox from "./MessageBox";
-import { Message } from "@prisma/client";
+import { Message, User } from "@prisma/client";
 
 interface BodyProps {
-  messages: Message[];
+  messages: (Message & { sender: User })[];
 }
 
 const Body: React.FC<BodyProps> = ({ messages = [] }) => {
@@ -12,9 +11,6 @@ const Body: React.FC<BodyProps> = ({ messages = [] }) => {
       {messages.map((message) => (
         <MessageBox key={message.id} data={message} />
       ))}
-      {/* <MessageBox isOwn />
-      <MessageBox imageSrc="https://tailwindui.com/img/ecommerce-images/category-page-01-image-card-01.jpg" />
-      <MessageBox isOwn imageSrc="https://tailwindui.com/img/ecommerce-images/category-page-01-image-card-01.jpg" /> */}
     </div>
    );
 }

@@ -14,7 +14,7 @@ const ChatId = async ({ params }: { params: IParams }) => {
 
   if (!conversation) {
     return (
-      <p>SOmething went wrong!</p>
+      <p>Something went wrong!</p>
     )
   }
 

@@ -6,10 +6,14 @@ import { Fragment } from 'react'
 interface ImageModalProps {
   isOpen?: boolean;
   onClose: () => void;
-  src?: string;
+  src?: string | null;
 }
 
 const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, src }) => {
+  if (!src) {
+    return null;
+  }
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>

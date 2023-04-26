@@ -6,16 +6,19 @@ import Input from "../../components/Input";
 
 import useChat from "@/app/hooks/useChat";
 import { classNames } from "@/app/helpers";
-import { Conversation, User } from "@prisma/client";
+import { Conversation, Message, User } from "@prisma/client";
 import ConversationBox from "./ConversationBox";
+import { useParams } from "next/navigation";
 
 interface ConversationListProps {
-  items: (Conversation & { users: User[] })[];
+  items: (Conversation & { users: User[]; messages: Message[] })[];
   title?: string;
 }
 
 const ConversationList: React.FC<ConversationListProps> = ({ items, title }) => {
+  const params = useParams();
   const { isOpen } = useChat();
+  const conversationId = params.conversationId;
 
   return ( 
     <aside className={classNames(`
@@ -43,6 +46,7 @@ const ConversationList: React.FC<ConversationListProps> = ({ items, title }) => 
           <ConversationBox
             key={item.id}
             data={item}
+            selected={conversationId === item.id}
           />
         ))}
       </div>

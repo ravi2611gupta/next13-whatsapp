@@ -12,7 +12,7 @@ const useRoutes = () => {
       label: 'Chat', 
       href: '/conversations', 
       icon: ChatBubbleOvalLeftIcon,
-      active: pathname === '/conversations' || !!params.chatId
+      active: pathname === '/conversations' || !!params.conversationId
     },
     { 
       label: 'Users', 

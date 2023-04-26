@@ -6,6 +6,7 @@ import { useState } from "react";
 import ImageModal from "./ImageModal";
 import { useSession } from "next-auth/react";
 import { Message, User } from "@prisma/client";
+import { format } from "date-fns";
 
 interface MessageBoxProps {
   data: Message & {
@@ -27,7 +28,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data }) => {
   return ( 
     <div className={container}>
       <div className={avatar}>
-        <Avatar src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" />
+        <Avatar src={data.sender.image} />
       </div>
       <div className={body}>
         <div className="flex items-center gap-1">
@@ -35,7 +36,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data }) => {
             {data.sender.name}
           </div>
           <div className="text-xs text-gray-400">
-            11:00 AM
+            {format(new Date(data.createdAt), 'p')}
           </div>
         </div>
         <div className={message}>

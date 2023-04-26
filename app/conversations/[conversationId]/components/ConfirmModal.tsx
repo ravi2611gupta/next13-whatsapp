@@ -1,8 +1,10 @@
 'use client';
 
-import React, { Fragment } from 'react'
+import React, { Fragment, useCallback } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import axios from 'axios';
+import { useParams, useRouter } from 'next/navigation';
 
 interface ConfirmModalProps {
   isOpen?: boolean;
@@ -10,6 +12,18 @@ interface ConfirmModalProps {
 }
 
 const ConfirmModal: React.FC<ConfirmModalProps> = ({ isOpen, onClose }) => {
+  const params = useParams();
+  const router = useRouter();
+  const { conversationId } = params;
+  const onDelete = useCallback(() => {
+    axios.delete(`/api/conversations/${conversationId}`)
+    .then(() => {
+      onClose();
+      router.push('/conversations');
+      router.refresh();
+    })
+  }, [router, conversationId, onClose]);
+
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -148,7 +162,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ isOpen, onClose }) => {
                       sm:ml-3 
                       sm:w-auto
                     "
-                    onClick={onClose}
+                    onClick={onDelete}
                   >
                     Delete
                   </button>

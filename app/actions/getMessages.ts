@@ -20,7 +20,7 @@ const getMessages = cache(async (
         sender: true
       },
       orderBy: {
-        createdAt: 'desc'
+        createdAt: 'asc'
       }
     });
 

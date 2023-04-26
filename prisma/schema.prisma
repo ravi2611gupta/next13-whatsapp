@@ -49,7 +49,6 @@ model Conversation {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userIds String[] @db.ObjectId
   users User[] @relation(fields: [userIds], references: [id])
-  lastMessage String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   messagesIds String[] @db.ObjectId
