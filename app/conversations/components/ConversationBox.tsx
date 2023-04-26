@@ -7,6 +7,7 @@ import { Conversation, Message, User } from "@prisma/client";
 import Avatar from "@/app/components/Avatar";
 import useOtherUser from "@/app/hooks/useOtherUser";
 import { format } from "date-fns";
+import { useSession } from "next-auth/react";
 
 interface ConversationBoxProps {
   data: Conversation & {
@@ -18,6 +19,7 @@ interface ConversationBoxProps {
 
 const ConversationBox: React.FC<ConversationBoxProps> = ({ data, selected }) => {
   const otherUser = useOtherUser(data);
+  const session = useSession();
   const router = useRouter();
 
   const handleClick = useCallback(() => {
@@ -29,7 +31,19 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ data, selected }) => 
 
     return messages[messages.length - 1];
   }, [data.messages]);
+
+  const userEmail = useMemo(() => session.data?.user?.email, [session.data?.user?.email]);
   
+  const hasSeen = useMemo(() => {
+    const seenBy = data.seenBy || [];
+    
+    if (!userEmail) {
+      return false;
+    }
+
+    return seenBy.indexOf(userEmail) !== -1
+  }, [userEmail, data.seenBy]);
+
   return ( 
     <div
       onClick={handleClick}
@@ -52,12 +66,12 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ data, selected }) => 
         <div className="focus:outline-none">
           <span className="absolute inset-0" aria-hidden="true" />
           <div className="flex justify-between items-center mb-1">
-            <p className="text-sm font-medium text-gray-900">{otherUser.name}</p>
+            <p className="text-md font-medium text-gray-900">{otherUser.name}</p>
             {lastMessage?.createdAt && (
               <p className="text-xs text-gray-400 font-light">{format(new Date(lastMessage.createdAt), 'p')}</p>
             )}
           </div>
-          <p className="truncate text-sm text-gray-500">{lastMessage?.body}</p>
+          <p className={`truncate text-sm ${hasSeen? 'text-gray-500' : 'text-black font-medium'}`}>{lastMessage?.body}</p>
         </div>
       </div>
     </div>

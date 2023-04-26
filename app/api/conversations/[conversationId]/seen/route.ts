@@ -4,47 +4,32 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import { pusherServer } from '@/app/libs/pusher'
 import prisma from "@/app/libs/prismadb";
 
+interface IParams {
+  conversationId?: string;
+}
+
 export async function POST(
   request: Request,
+  { params }: { params: IParams }
 ) {
   try {
     const currentUser = await getCurrentUser();
-    const body = await request.json();
     const {
-      message,
-      imageUrl,
       conversationId
-    } = body;
+    } = params;
 
     if (!currentUser?.id || !currentUser?.email) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
-
-    const newMessage = await prisma.message.create({
-      data: {
-        body: message,
-        imageUrl: imageUrl,
-        conversation: {
-          connect: { id: conversationId }
-        },
-        sender: {
-          connect: { id: currentUser.id }
-        }
-      }
-    });
-
-    await pusherServer.trigger(conversationId, 'conversation-message', {
-      ...newMessage,
-      sender: currentUser
-    });
 
     const updatedConversation = await prisma.conversation.update({
       where: {
         id: conversationId
       },
       data: {
-        lastMessageAt: new Date(),
-        seenBy: [currentUser.email],
+        seenBy: {
+          push: currentUser.email
+        },
       },
       include: {
         users: true,
@@ -52,13 +37,9 @@ export async function POST(
       }
     });
 
-    updatedConversation.users.map((user) => {
-      if (user.email) {
-        pusherServer.trigger(user.email, 'conversation-list', updatedConversation);
-      }
-    });
+    pusherServer.trigger(currentUser.email, 'conversation-list', updatedConversation);
 
-    return NextResponse.json(newMessage)
+    return NextResponse.json(updatedConversation)
   } catch (error) {
     console.log(error, 'ERROR_MESSAGES')
     return new NextResponse('Error', { status: 500 });

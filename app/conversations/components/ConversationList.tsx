@@ -8,17 +8,45 @@ import useChat from "@/app/hooks/useChat";
 import { classNames } from "@/app/helpers";
 import { Conversation, Message, User } from "@prisma/client";
 import ConversationBox from "./ConversationBox";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useEffect, useMemo, useState } from "react";
+import { pusherClient } from "@/app/libs/pusher";
+import axios from "axios";
 
 interface ConversationListProps {
-  items: (Conversation & { users: User[]; messages: Message[] })[];
+  initialItems: (Conversation & { users: User[]; messages: Message[] })[];
   title?: string;
 }
 
-const ConversationList: React.FC<ConversationListProps> = ({ items, title }) => {
+const ConversationList: React.FC<ConversationListProps> = ({ initialItems, title }) => {
+  const [items, setItems] = useState(initialItems);
+  const router = useRouter();
   const params = useParams();
   const { isOpen } = useChat();
-  const conversationId = params.conversationId;
+  const { conversationId } = params;
+  const session = useSession();
+
+  const pusherKey = useMemo(() => {
+    return session.data?.user?.email
+  }, [session.data?.user?.email])
+
+  useEffect(() => {
+    if (!pusherKey) {
+      return;
+    }
+
+    pusherClient.subscribe(pusherKey);
+
+    const handler = (conversation: Conversation & { users: User[]; messages: Message[] }) => {
+      setItems((current) => {
+        const filteredItems = current.filter((item) => item.id !== conversation.id);
+        return [conversation, ...filteredItems]
+      })
+    }
+
+    pusherClient.bind('conversation-list', handler)
+  }, [pusherKey, router]);
 
   return ( 
     <aside className={classNames(`

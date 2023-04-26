@@ -50,9 +50,10 @@ model Conversation {
   userIds String[] @db.ObjectId
   users User[] @relation(fields: [userIds], references: [id])
   createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  lastMessageAt DateTime @default(now())
   messagesIds String[] @db.ObjectId
   messages Message[]
+  seenBy String[] @default([])
 }
 
 model Message {

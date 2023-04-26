@@ -1,25 +1,35 @@
 import { cache } from "react";
 
 import prisma from "@/app/libs/prismadb";
-
-interface IParams {
-  conversationId?: string;
-}
+import { pusherServer } from "../libs/pusher";
+import getCurrentUser from "./getCurrentUser";
 
 const getConversationById = cache(async (
-  params: IParams
+  conversationId: string
 ) => {
-  const { conversationId } = params;
-
   try {
-    const conversation = await prisma.conversation.findUnique({
+    const currentUser = await getCurrentUser();
+
+    if (!currentUser?.email) {
+      return null;
+    }
+  
+    const conversation = await prisma.conversation.update({
       where: {
         id: conversationId
       },
       include: {
-        users: true
+        users: true,
+        messages: true
+      },
+      data: {
+        seenBy: {
+          push: currentUser.email
+        }
       }
     });
+
+    await pusherServer.trigger(currentUser.email, 'conversation-list', conversation);
 
     return conversation;
   } catch (error: any) {
