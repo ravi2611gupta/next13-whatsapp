@@ -1,9 +1,9 @@
+import axios from "axios";
 import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import {  User } from "@prisma/client";
 
 import Avatar from "@/app/components/Avatar";
-import axios from "axios";
 
 interface UserBoxProps {
   data: User
@@ -36,7 +36,7 @@ const UserBox: React.FC<UserBoxProps> = ({ data }) => {
         cursor-pointer
       "
     >
-      <Avatar src={data.imageUrl} />
+      <Avatar user={data} />
       <div className="min-w-0 flex-1">
         <div className="focus:outline-none">
           <span className="absolute inset-0" aria-hidden="true" />

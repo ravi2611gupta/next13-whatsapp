@@ -1,8 +1,6 @@
 'use client';
 
 import Modal from '@/app/components/Modal';
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
 
 interface ImageModalProps {
   isOpen?: boolean;
@@ -17,7 +15,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, src }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <img src={src} />
+      <img className="w-full h-full" src={src} />
     </Modal>
   )
 }

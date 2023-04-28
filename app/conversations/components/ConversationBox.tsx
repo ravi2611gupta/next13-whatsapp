@@ -80,7 +80,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ data, selected }) => 
         ${selected ? 'bg-neutral-100' : 'bg-white'}
       `}
     >
-      <Avatar src={otherUser.imageUrl} />
+      <Avatar user={otherUser} />
       <div className="min-w-0 flex-1">
         <div className="focus:outline-none">
           <span className="absolute inset-0" aria-hidden="true" />

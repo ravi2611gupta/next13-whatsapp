@@ -74,7 +74,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                       <div className="relative mt-6 flex-1 px-4 sm:px-6">
                         <div className="flex flex-col items-center">
                           <div>
-                            <Avatar large src={user.imageUrl} />
+                            <Avatar user={user} />
                           </div>
                           <div>
                             {user.name}

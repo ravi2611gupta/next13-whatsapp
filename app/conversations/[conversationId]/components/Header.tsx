@@ -8,6 +8,7 @@ import { useState } from "react";
 import ProfileDrawer from "./ProfileDrawer";
 import { Conversation, User } from "@prisma/client";
 import useOtherUser from "@/app/hooks/useOtherUser";
+import useActiveList from "@/app/hooks/useActiveList";
 
 interface HeaderProps {
   conversation: Conversation & {
@@ -19,6 +20,9 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
   const otherUser = useOtherUser(conversation);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  const { members } = useActiveList();
+  const isActive = members.indexOf(otherUser?.email!) !== -1;
+
   return (
   <>
     <ProfileDrawer user={otherUser} isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
@@ -27,10 +31,10 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
         <Link href="/conversations" className="lg:hidden block text-sky-500 hover:text-sky-600 transition cursor-pointer">
           <ChevronLeftIcon className="h-6" />
         </Link>
-        <Avatar src={otherUser.imageUrl} />
+        <Avatar user={otherUser} />
         <div className="flex flex-col">
           <div>{otherUser.name}</div>
-          <div className="text-sm font-light text-neutral-500">Active</div>
+          <div className="text-sm font-light text-neutral-500">{isActive ? 'Active' : 'Offline'}</div>
         </div>
       </div>
       <EllipsisHorizontalIcon 

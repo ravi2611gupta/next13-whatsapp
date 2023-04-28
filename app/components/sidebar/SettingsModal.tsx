@@ -66,7 +66,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, currentU
                   Photo
                 </label>
                 <div className="mt-2 flex items-center gap-x-3">
-                  <Avatar src={imageUrl || currentUser.imageUrl} />
+                  <img className="rounded-full h-12 w-12" src={imageUrl || currentUser.imageUrl} />
                   <CldUploadButton options={{ maxFiles: 1 }} onUpload={handleUpload} uploadPreset="pgc9ehd5">
                     <button
                       type="button"
