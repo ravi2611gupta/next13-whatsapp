@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
         <Link href="/conversations" className="lg:hidden block text-sky-500 hover:text-sky-600 transition cursor-pointer">
           <ChevronLeftIcon className="h-6" />
         </Link>
-        <Avatar src={otherUser.image} />
+        <Avatar src={otherUser.imageUrl} />
         <div className="flex flex-col">
           <div>{otherUser.name}</div>
           <div className="text-sm font-light text-neutral-500">Active</div>

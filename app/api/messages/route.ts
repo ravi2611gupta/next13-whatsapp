@@ -21,6 +21,10 @@ export async function POST(
     }
 
     const newMessage = await prisma.message.create({
+      include: {
+        seen: true,
+        sender: true
+      },
       data: {
         body: message,
         imageUrl: imageUrl,
@@ -29,14 +33,16 @@ export async function POST(
         },
         sender: {
           connect: { id: currentUser.id }
-        }
+        },
+        seen: {
+          connect: {
+            id: currentUser.id
+          }
+        },
       }
     });
 
-    await pusherServer.trigger(conversationId, 'conversation-message', {
-      ...newMessage,
-      sender: currentUser
-    });
+    await pusherServer.trigger(conversationId, 'messages:new', newMessage);
 
     const updatedConversation = await prisma.conversation.update({
       where: {
@@ -44,7 +50,6 @@ export async function POST(
       },
       data: {
         lastMessageAt: new Date(),
-        seenBy: [currentUser.email],
       },
       include: {
         users: true,
@@ -52,9 +57,14 @@ export async function POST(
       }
     });
 
+    const lastMessage = updatedConversation.messages[updatedConversation.messages.length - 1];
+
     updatedConversation.users.map((user) => {
       if (user.email) {
-        pusherServer.trigger(user.email, 'conversation-list', updatedConversation);
+        pusherServer.trigger(user.email, 'conversation:update', {
+          ...updatedConversation,
+          messages: [lastMessage]
+        });
       }
     });
 

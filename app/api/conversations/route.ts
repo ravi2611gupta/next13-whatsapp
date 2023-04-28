@@ -2,6 +2,7 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import { NextResponse } from "next/server";
 
 import prisma from "@/app/libs/prismadb";
+import { pusherServer } from "@/app/libs/pusher";
 
 export async function POST(
   request: Request,
@@ -13,7 +14,7 @@ export async function POST(
       userId
     } = body;
 
-    if (!currentUser?.id || !userId) {
+    if (!currentUser?.id || !currentUser?.email || !userId) {
       return NextResponse.json(null);
     }
 
@@ -43,6 +44,16 @@ export async function POST(
             }
           ]
         }
+      },
+      include: {
+        users: true
+      }
+    });
+
+    // Update all connections with new conversation
+    newConversation.users.map((user) => {
+      if (user.email) {
+        pusherServer.trigger(user.email, 'conversation:new', newConversation);
       }
     });
 

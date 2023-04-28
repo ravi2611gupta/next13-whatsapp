@@ -20,7 +20,7 @@ const useRoutes = () => {
       icon: UsersIcon, 
       active: pathname === '/users'
     },
-    { 
+    {
       label: 'Logout', 
       onClick: () => signOut(),
       href: '#',

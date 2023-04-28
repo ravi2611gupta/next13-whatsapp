@@ -36,7 +36,7 @@ const UserBox: React.FC<UserBoxProps> = ({ data }) => {
         cursor-pointer
       "
     >
-      <Avatar src={data.image} />
+      <Avatar src={data.imageUrl} />
       <div className="min-w-0 flex-1">
         <div className="focus:outline-none">
           <span className="absolute inset-0" aria-hidden="true" />

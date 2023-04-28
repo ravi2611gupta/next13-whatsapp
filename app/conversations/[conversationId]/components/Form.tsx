@@ -39,15 +39,17 @@ const Form = () => {
   }
 
   return ( 
-    <form onSubmit={handleSubmit(onSubmit)} className="py-4 px-4 bg-white border-t flex items-center gap-2 lg:gap-4">
+    <div className="py-4 px-4 bg-white border-t flex items-center gap-2 lg:gap-4 w-full">
       <CldUploadButton options={{ maxFiles: 1 }} onUpload={handleUpload} uploadPreset="pgc9ehd5">
         <PhotoIcon className="h-10 text-sky-500" />
       </CldUploadButton>
-      <Input id="message" register={register} errors={errors} required placeholder="Write a message" />
-      <button type="submit" className="rounded-full p-2 bg-sky-500 cursor-pointer hover:bg-sky-600 transition">
-        <PaperAirplaneIcon className="lg:h-5 h-4 text-white" />
-      </button>
-    </form>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex items-center gap-2 lg:gap-4 w-full">
+        <Input id="message" register={register} errors={errors} required placeholder="Write a message" />
+        <button type="submit" className="rounded-full p-2 bg-sky-500 cursor-pointer hover:bg-sky-600 transition">
+          <PaperAirplaneIcon className="lg:h-5 h-4 text-white" />
+        </button>
+      </form>
+    </div>
   );
 }
  

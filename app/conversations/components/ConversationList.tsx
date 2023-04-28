@@ -21,11 +21,13 @@ interface ConversationListProps {
 
 const ConversationList: React.FC<ConversationListProps> = ({ initialItems, title }) => {
   const [items, setItems] = useState(initialItems);
+
   const router = useRouter();
   const params = useParams();
   const { isOpen } = useChat();
-  const { conversationId } = params;
   const session = useSession();
+
+  const { conversationId } = params;
 
   const pusherKey = useMemo(() => {
     return session.data?.user?.email
@@ -38,14 +40,22 @@ const ConversationList: React.FC<ConversationListProps> = ({ initialItems, title
 
     pusherClient.subscribe(pusherKey);
 
-    const handler = (conversation: Conversation & { users: User[]; messages: Message[] }) => {
-      setItems((current) => {
-        const filteredItems = current.filter((item) => item.id !== conversation.id);
-        return [conversation, ...filteredItems]
-      })
+    const updateHandler = (conversation: Conversation & { users: User[]; messages: Message[] }) => {
+      setItems((current) => current.map((currentConversation) => {
+        if (currentConversation.id === conversation.id) {
+          return conversation;
+        }
+
+        return currentConversation;
+      }));
     }
 
-    pusherClient.bind('conversation-list', handler)
+    const newHandler = (conversation: Conversation & { users: User[]; messages: Message[] }) => {
+      setItems((current) => [conversation, ...current]);
+    }
+
+    pusherClient.bind('conversation:update', updateHandler)
+    pusherClient.bind('conversation:new', newHandler)
   }, [pusherKey, router]);
 
   return ( 

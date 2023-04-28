@@ -15,14 +15,18 @@ model User {
   name            String?
   email           String?   @unique
   emailVerified   DateTime?
-  image           String?
+  imageUrl           String?
   hashedPassword  String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+
   conversationIds String[] @db.ObjectId
+  conversations Conversation[] @relation(fields: [conversationIds], references: [id])
+  
+  seenMessageIds String[] @db.ObjectId
+  seenMessages Message[] @relation("Seen", fields: [seenMessageIds], references: [id])
 
   accounts Account[]
-  conversations Conversation[] @relation(fields: [conversationIds], references: [id])
   messages Message[]
 }
 
@@ -47,23 +51,28 @@ model Account {
 
 model Conversation {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  userIds String[] @db.ObjectId
-  users User[] @relation(fields: [userIds], references: [id])
   createdAt       DateTime @default(now())
   lastMessageAt DateTime @default(now())
+  
   messagesIds String[] @db.ObjectId
   messages Message[]
-  seenBy String[] @default([])
+
+  userIds String[] @db.ObjectId
+  users User[] @relation(fields: [userIds], references: [id])
 }
 
 model Message {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   body String?
   imageUrl String?
-  conversationId String @db.ObjectId
-  senderId String @db.ObjectId
   createdAt DateTime @default(now())
 
+  seenIds String[] @db.ObjectId
+  seen User[] @relation("Seen", fields: [seenIds], references: [id])
+
+  conversationId String @db.ObjectId
   conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  
+  senderId String @db.ObjectId
   sender User @relation(fields: [senderId], references: [id], onDelete: Cascade)
 }

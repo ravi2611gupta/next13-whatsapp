@@ -11,7 +11,8 @@ const getMessages = cache(async (
         conversationId: conversationId
       },
       include: {
-        sender: true
+        sender: true,
+        seen: true,
       },
       orderBy: {
         createdAt: 'asc'

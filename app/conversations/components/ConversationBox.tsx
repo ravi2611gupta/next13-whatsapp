@@ -12,7 +12,10 @@ import { useSession } from "next-auth/react";
 interface ConversationBoxProps {
   data: Conversation & {
     users: User[];
-    messages: Message[]
+    messages: (Message & {
+      sender: User,
+      seen: User[],
+    })[]
   },
   selected?: boolean;
 }
@@ -35,14 +38,18 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ data, selected }) => 
   const userEmail = useMemo(() => session.data?.user?.email, [session.data?.user?.email]);
   
   const hasSeen = useMemo(() => {
-    const seenBy = data.seenBy || [];
-    
+    if (!lastMessage) {
+      return false;
+    }
+
+    const seenArray = lastMessage.seen || [];
+
     if (!userEmail) {
       return false;
     }
 
-    return seenBy.indexOf(userEmail) !== -1
-  }, [userEmail, data.seenBy]);
+    return seenArray.filter((user) => user.email === userEmail).length !== 0;
+  }, [userEmail, lastMessage]);
 
   const lastMessageText = useMemo(() => {
     if (lastMessage?.imageUrl) {
@@ -73,7 +80,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ data, selected }) => 
         ${selected ? 'bg-neutral-100' : 'bg-white'}
       `}
     >
-      <Avatar src={otherUser.image} />
+      <Avatar src={otherUser.imageUrl} />
       <div className="min-w-0 flex-1">
         <div className="focus:outline-none">
           <span className="absolute inset-0" aria-hidden="true" />
