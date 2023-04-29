@@ -7,6 +7,7 @@ import {  Message, User } from "@prisma/client";
 
 import { pusherClient } from "@/app/libs/pusher";
 import MessageBox from "./MessageBox";
+import { useSession } from "next-auth/react";
 
 type MessageType = Message & { sender: User, seen: User[] };
 
@@ -15,6 +16,7 @@ interface BodyProps {
 }
 
 const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
+  const session = useSession();
   const bottomRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState(initialMessages);
   const params = useParams();
@@ -29,6 +31,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
     bottomRef?.current?.scrollIntoView();
 
     const messageHandler = (message: MessageType) => {
+      console.log('NEW_MESSAGE?', message)
       axios.post(`/api/conversations/${conversationId}/seen`);
 
       setMessages((current) => [...current, message]);
@@ -37,7 +40,6 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
     };
 
     const updateMessageHandler = (newMessage: MessageType) => {
-      console.log('UDPATE_HANDLER', newMessage)
       setMessages((current) => current.map((currentMessage) => {
         if (currentMessage.id === newMessage.id) {
           return newMessage;

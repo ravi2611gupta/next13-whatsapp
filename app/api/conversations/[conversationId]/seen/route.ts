@@ -18,6 +18,7 @@ export async function POST(
       conversationId
     } = params;
 
+    
     if (!currentUser?.id || !currentUser?.email) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
@@ -66,24 +67,9 @@ export async function POST(
       }
     });
 
-    // Get new synced conversation with new seen
-    const syncedConversation = await prisma.conversation.findUnique({
-      where: {
-        id: conversationId
-      },
-      include: {
-        users: true,
-        messages: {
-          include: {
-            seen: true
-          }
-        }
-      }
-    })
-
     // Update all connections with new seen
-    pusherServer.trigger(currentUser.email, 'conversation:update', {
-      ...syncedConversation,
+    await pusherServer.trigger(currentUser.email, 'conversation:update', {
+      id: conversationId,
       messages: [updatedMessage]
     });
 
@@ -93,11 +79,11 @@ export async function POST(
     }
 
     // Update last message seen
-    pusherServer.trigger(conversationId!, 'message:update', updatedMessage);
+    await pusherServer.trigger(conversationId!, 'message:update', updatedMessage);
 
-    return NextResponse.json(syncedConversation)
+    return new NextResponse('Success');
   } catch (error) {
-    console.log(error, 'ERROR_MESSAGES')
+    console.log(error, 'ERROR_MESSAGES_SEEN')
     return new NextResponse('Error', { status: 500 });
   }
 }

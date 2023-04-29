@@ -21,11 +21,11 @@ export async function DELETE(
 
     const deletedConversation = await prisma.conversation.deleteMany({
       where: {
+        id: conversationId,
         userIds: {
           hasSome: [currentUser.id]
         },
-        id: conversationId
-      }
+      },
     });
 
     return NextResponse.json(deletedConversation)

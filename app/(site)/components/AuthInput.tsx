@@ -40,6 +40,7 @@ const AuthInput: React.FC<AuthInputProps> = ({
           autoComplete={id}
           {...register(id, { required })}
           className={`
+            form-input
             block 
             w-full 
             rounded-md 
