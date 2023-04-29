@@ -2,10 +2,9 @@
 
 import React from 'react'
 import { useRouter } from 'next/navigation';
-import AuthInput from '@/app/(site)/components/AuthInput';
+import Input from "../inputs/Input";
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import Modal from '../Modal';
-import Avatar from '../Avatar';
+import Modal from '../modals/Modal';
 import { User } from '@prisma/client';
 import { CldUploadButton } from 'next-cloudinary';
 import axios from 'axios';
@@ -59,7 +58,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, currentU
             </p>
 
             <div className="mt-10 flex flex-col gap-y-8">
-              <AuthInput label="Name" id="name" errors={errors} required register={register} />
+              <Input label="Name" id="name" errors={errors} required register={register} />
 
               <div>
                 <label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-900">

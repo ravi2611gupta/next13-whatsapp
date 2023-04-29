@@ -36,7 +36,7 @@ const useActiveChannel = () => {
         setActiveChannel(null);
       }
     }
-  }, []);
+  }, [activeChannel, set, add, remove]);
 }
 
 export default useActiveChannel;

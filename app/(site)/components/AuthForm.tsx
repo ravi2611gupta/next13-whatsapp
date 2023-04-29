@@ -7,7 +7,7 @@ import { BsFacebook, BsTwitter, BsGithub  } from 'react-icons/bs';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from "next/navigation";
 
-import AuthInput from "./AuthInput";
+import Input from "@/app/components/inputs/Input";
 import AuthSocialButton from './AuthSocialButton';
 
 type Variant = 'LOGIN' | 'REGISTER';
@@ -62,21 +62,21 @@ const AuthForm = () => {
           <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               {variant === 'REGISTER' && (
-                <AuthInput 
+                <Input 
                   register={register}
                   errors={errors}
                   id="name" 
                   label="Name"
                 />
               )}
-              <AuthInput 
+              <Input 
                 register={register}
                 errors={errors}
                 id="email" 
                 label="Email address" 
                 type="email"
               />
-              <AuthInput 
+              <Input 
                 register={register}
                 errors={errors}
                 id="password" 

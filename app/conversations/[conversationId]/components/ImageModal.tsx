@@ -1,6 +1,6 @@
 'use client';
 
-import Modal from '@/app/components/Modal';
+import Modal from '@/app/components/modals/Modal';
 
 interface ImageModalProps {
   isOpen?: boolean;

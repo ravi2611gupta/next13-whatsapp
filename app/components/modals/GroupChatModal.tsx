@@ -2,12 +2,12 @@
 
 import React from 'react'
 import { useRouter } from 'next/navigation';
-import AuthInput from '@/app/(site)/components/AuthInput';
+import Input from "../inputs/Input";
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Modal from './Modal';
 import { User } from '@prisma/client';
 import axios from 'axios';
-import Select from './Select';
+import Select from '../inputs/Select';
 
 interface GroupChatModalProps {
   isOpen?: boolean;
@@ -56,7 +56,7 @@ const GroupChatModal: React.FC<GroupChatModalProps> = ({ isOpen, onClose, users 
               Create a chat with more than 2 people.
             </p>
             <div className="mt-10 flex flex-col gap-y-8">
-              <AuthInput 
+              <Input 
                 label="Name" 
                 id="name" 
                 errors={errors} 

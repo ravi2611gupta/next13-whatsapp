@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
 import { pusherClient } from "@/app/libs/pusher";
 import { MdOutlineGroupAdd } from 'react-icons/md';
-import GroupChatModal from "@/app/components/GroupChatModal";
+import GroupChatModal from "@/app/components/modals/GroupChatModal";
 
 interface ConversationListProps {
   initialItems: (Conversation & { users: User[]; messages: Message[] })[];

@@ -2,7 +2,7 @@
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-import Input from "../../components/Input";
+import Input from "../../components/inputs/Input";
 
 import useChat from "@/app/hooks/useChat";
 import { classNames } from "@/app/helpers";

@@ -1,7 +1,7 @@
 'use client';
 
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
-import { classNames } from "../helpers";
+import { classNames } from "../../../helpers";
 
 interface InputProps {
   icon?: any;

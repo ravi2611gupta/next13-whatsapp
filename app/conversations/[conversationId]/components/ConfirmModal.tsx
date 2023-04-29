@@ -5,7 +5,7 @@ import { Dialog } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import axios from 'axios';
 import { useParams, useRouter } from 'next/navigation';
-import Modal from '@/app/components/Modal';
+import Modal from '@/app/components/modals/Modal';
 
 interface ConfirmModalProps {
   isOpen?: boolean;
