@@ -9,7 +9,9 @@ interface UserBoxProps {
   data: User
 }
 
-const UserBox: React.FC<UserBoxProps> = ({ data }) => {
+const UserBox: React.FC<UserBoxProps> = ({ 
+  data
+}) => {
   const router = useRouter();
 
   const handleClick = useCallback(() => {
@@ -41,7 +43,9 @@ const UserBox: React.FC<UserBoxProps> = ({ data }) => {
         <div className="focus:outline-none">
           <span className="absolute inset-0" aria-hidden="true" />
           <div className="flex justify-between items-center mb-1">
-            <p className="text-sm font-medium text-gray-900">{data.name}</p>
+            <p className="text-sm font-medium text-gray-900">
+              {data.name}
+            </p>
           </div>
         </div>
       </div>

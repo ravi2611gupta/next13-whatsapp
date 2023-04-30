@@ -4,7 +4,9 @@ interface AuthSocialButtonProps {
   icon: IconType
 }
 
-const AuthSocialButton: React.FC<AuthSocialButtonProps> = ({ icon: Icon }) => {
+const AuthSocialButton: React.FC<AuthSocialButtonProps> = ({ 
+  icon: Icon 
+}) => {
   return ( 
     <div>
       <a

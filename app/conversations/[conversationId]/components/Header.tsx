@@ -1,15 +1,16 @@
 'use client';
 
 import { ChevronLeftIcon, EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
-
-import Avatar from "@/app/components/Avatar";
-import Link from "next/link";
 import { useMemo, useState } from "react";
-import ProfileDrawer from "./ProfileDrawer";
+import Link from "next/link";
 import { Conversation, User } from "@prisma/client";
+
 import useOtherUser from "@/app/hooks/useOtherUser";
 import useActiveList from "@/app/hooks/useActiveList";
+
+import Avatar from "@/app/components/Avatar";
 import AvatarGroup from "@/app/components/AvatarGroup";
+import ProfileDrawer from "./ProfileDrawer";
 
 interface HeaderProps {
   conversation: Conversation & {
@@ -33,16 +34,50 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
 
   return (
   <>
-    <ProfileDrawer data={conversation} isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
-    <div className="bg-white w-full flex border-b-[1px] sm:px-4 py-3 px-4 lg:px-6 justify-between items-center shadow-sm">
+    <ProfileDrawer 
+      data={conversation} 
+      isOpen={drawerOpen} 
+      onClose={() => setDrawerOpen(false)}
+    />
+    <div 
+      className="
+        bg-white 
+        w-full 
+        flex 
+        border-b-[1px] 
+        sm:px-4 
+        py-3 
+        px-4 
+        lg:px-6 
+        justify-between 
+        items-center 
+        shadow-sm
+      "
+    >
       <div className="flex gap-3 items-center">
-        <Link href="/conversations" className="lg:hidden block text-sky-500 hover:text-sky-600 transition cursor-pointer">
+        <Link
+          href="/conversations" 
+          className="
+            lg:hidden 
+            block 
+            text-sky-500 
+            hover:text-sky-600 
+            transition 
+            cursor-pointer
+          "
+        >
           <ChevronLeftIcon className="h-6" />
         </Link>
-        {conversation.isGroup ? <AvatarGroup users={conversation.users} /> : <Avatar user={otherUser} />}
+        {conversation.isGroup ? (
+          <AvatarGroup users={conversation.users} />
+        ) : (
+          <Avatar user={otherUser} />
+        )}
         <div className="flex flex-col">
           <div>{conversation.name || otherUser.name}</div>
-          <div className="text-sm font-light text-neutral-500">{statusText}</div>
+          <div className="text-sm font-light text-neutral-500">
+            {statusText}
+          </div>
         </div>
       </div>
       <EllipsisHorizontalIcon 

@@ -1,13 +1,14 @@
 'use client';
 
+import axios from 'axios';
 import React from 'react'
 import { useRouter } from 'next/navigation';
-import Input from "../inputs/Input";
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import Modal from '../modals/Modal';
 import { User } from '@prisma/client';
 import { CldUploadButton } from 'next-cloudinary';
-import axios from 'axios';
+
+import Input from "../inputs/Input";
+import Modal from '../modals/Modal';
 
 interface SettingsModalProps {
   isOpen?: boolean;
@@ -15,7 +16,11 @@ interface SettingsModalProps {
   currentUser: User;
 }
 
-const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, currentUser }) => {
+const SettingsModal: React.FC<SettingsModalProps> = ({ 
+  isOpen, 
+  onClose, 
+  currentUser
+}) => {
   const router = useRouter();
 
   const {
@@ -36,7 +41,9 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, currentU
   const imageUrl = watch('imageUrl');
 
   const handleUpload = (result: any) => {
-    setValue('imageUrl', result.info.secure_url, { shouldValidate: true });
+    setValue('imageUrl', result.info.secure_url, { 
+      shouldValidate: true 
+    });
   }
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {

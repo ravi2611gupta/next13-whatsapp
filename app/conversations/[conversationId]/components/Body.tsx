@@ -1,5 +1,6 @@
 'use client';
 
+import { useSession } from "next-auth/react";
 import axios from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
@@ -7,7 +8,6 @@ import {  Message, User } from "@prisma/client";
 
 import { pusherClient } from "@/app/libs/pusher";
 import MessageBox from "./MessageBox";
-import { useSession } from "next-auth/react";
 
 type MessageType = Message & { sender: User, seen: User[] };
 
@@ -31,7 +31,6 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
     bottomRef?.current?.scrollIntoView();
 
     const messageHandler = (message: MessageType) => {
-      console.log('NEW_MESSAGE?', message)
       axios.post(`/api/conversations/${conversationId}/seen`);
 
       setMessages((current) => [...current, message]);
@@ -63,7 +62,11 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
   return ( 
     <div className="flex-1 overflow-y-auto">
       {messages.map((message, i) => (
-        <MessageBox isLast={i === messages.length - 1} key={message.id} data={message} />
+        <MessageBox 
+          isLast={i === messages.length - 1} 
+          key={message.id} 
+          data={message}
+        />
       ))}
       <div className="pt-24" ref={bottomRef} />
     </div>

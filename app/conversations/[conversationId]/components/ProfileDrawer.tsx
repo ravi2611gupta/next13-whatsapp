@@ -3,14 +3,16 @@
 import { Fragment, useMemo, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import Avatar from '@/app/components/Avatar';
 import { TrashIcon } from '@heroicons/react/24/solid';
-import ConfirmModal from './ConfirmModal';
 import { Conversation, User } from '@prisma/client';
 import { format } from 'date-fns';
+
 import useOtherUser from '@/app/hooks/useOtherUser';
 import useActiveList from '@/app/hooks/useActiveList';
+
+import Avatar from '@/app/components/Avatar';
 import AvatarGroup from '@/app/components/AvatarGroup';
+import ConfirmModal from './ConfirmModal';
 
 interface ProfileDrawerProps {
   isOpen: boolean;
@@ -49,7 +51,10 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
 
   return (
     <>
-      <ConfirmModal isOpen={confirmOpen} onClose={() => setConfirmOpen(false)} />
+      <ConfirmModal 
+        isOpen={confirmOpen} 
+        onClose={() => setConfirmOpen(false)}
+      />
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={onClose}>
           <Transition.Child
@@ -117,25 +122,80 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                         <dl className="space-y-8 px-4 sm:space-y-6 sm:px-6">
                           {data.isGroup && (
                             <div>
-                              <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Emails</dt>
-                              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
+                              <dt 
+                                className="
+                                  text-sm 
+                                  font-medium 
+                                  text-gray-500 
+                                  sm:w-40 
+                                  sm:flex-shrink-0
+                                "
+                              >
+                                Emails
+                              </dt>
+                              <dd 
+                                className="
+                                  mt-1 
+                                  text-sm 
+                                  text-gray-900 
+                                  sm:col-span-2
+                                "
+                              >
                                 {data.users.map((user) => user.email).join(', ')}
                               </dd>
                             </div>
                           )}
                           {!data.isGroup && (
                             <div>
-                              <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Email</dt>
-                              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">{otherUser.email}</dd>
+                              <dt 
+                                className="
+                                  text-sm 
+                                  font-medium 
+                                  text-gray-500 
+                                  sm:w-40 
+                                  sm:flex-shrink-0
+                                "
+                              >
+                                Email
+                              </dt>
+                              <dd 
+                                className="
+                                  mt-1 
+                                  text-sm 
+                                  text-gray-900 
+                                  sm:col-span-2
+                                "
+                              >
+                                {otherUser.email}
+                              </dd>
                             </div>
                           )}
                           {!data.isGroup && (
                             <>
                               <hr />
                               <div>
-                                <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Joined</dt>
-                                <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
-                                  <time dateTime="1988-06-23">{joinedDate}</time>
+                                <dt 
+                                  className="
+                                    text-sm 
+                                    font-medium 
+                                    text-gray-500 
+                                    sm:w-40 
+                                    sm:flex-shrink-0
+                                  "
+                                >
+                                  Joined
+                                </dt>
+                                <dd 
+                                  className="
+                                    mt-1 
+                                    text-sm 
+                                    text-gray-900 
+                                    sm:col-span-2
+                                  "
+                                >
+                                  <time dateTime={joinedDate}>
+                                    {joinedDate}
+                                  </time>
                                 </dd>
                               </div>
                             </>

@@ -1,23 +1,30 @@
 'use client';
 
-import useChat from "@/app/hooks/useChat";
-import { classNames } from "@/app/helpers";
 import { Conversation, Message, User } from "@prisma/client";
-import ConversationBox from "./ConversationBox";
 import { useParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
-import { pusherClient } from "@/app/libs/pusher";
 import { MdOutlineGroupAdd } from 'react-icons/md';
+import clsx from "clsx";
+
+import useChat from "@/app/hooks/useChat";
+import { pusherClient } from "@/app/libs/pusher";
 import GroupChatModal from "@/app/components/modals/GroupChatModal";
+import ConversationBox from "./ConversationBox";
 
 interface ConversationListProps {
-  initialItems: (Conversation & { users: User[]; messages: Message[] })[];
+  initialItems: (Conversation & { 
+    users: User[]; 
+    messages: Message[] 
+  })[];
   users: User[];
   title?: string;
 }
 
-const ConversationList: React.FC<ConversationListProps> = ({ initialItems, title, users }) => {
+const ConversationList: React.FC<ConversationListProps> = ({ 
+  initialItems, 
+  users
+}) => {
 const [items, setItems] = useState(initialItems);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,8 +46,10 @@ const [items, setItems] = useState(initialItems);
 
     pusherClient.subscribe(pusherKey);
 
-    const updateHandler = (conversation: Conversation & { users: User[]; messages: Message[] }) => {
-      console.log('UPDATE?')
+    const updateHandler = (conversation: Conversation & { 
+      users: User[]; 
+      messages: Message[] 
+    }) => {
       setItems((current) => current.map((currentConversation) => {
         if (currentConversation.id === conversation.id) {
           return {
@@ -53,7 +62,10 @@ const [items, setItems] = useState(initialItems);
       }));
     }
 
-    const newHandler = (conversation: Conversation & { users: User[]; messages: Message[] }) => {
+    const newHandler = (conversation: Conversation & { 
+      users: User[]; 
+      messages: Message[] 
+    }) => {
       setItems((current) => [conversation, ...current]);
     }
 
@@ -63,8 +75,12 @@ const [items, setItems] = useState(initialItems);
 
   return (
     <>
-      <GroupChatModal users={users} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-      <aside className={classNames(`
+      <GroupChatModal 
+        users={users} 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+      />
+      <aside className={clsx(`
         fixed 
         inset-y-0 
         pb-20
@@ -81,7 +97,18 @@ const [items, setItems] = useState(initialItems);
             <div className="text-2xl font-bold text-neutral-800">
               Messages
             </div>
-            <div onClick={() => setIsModalOpen(true)} className="rounded-full p-2 bg-gray-100 text-gray-600 cursor-pointer hover:opacity-75 transition">
+            <div 
+              onClick={() => setIsModalOpen(true)} 
+              className="
+                rounded-full 
+                p-2 
+                bg-gray-100 
+                text-gray-600 
+                cursor-pointer 
+                hover:opacity-75 
+                transition
+              "
+            >
               <MdOutlineGroupAdd size={20} />
             </div>
           </div>

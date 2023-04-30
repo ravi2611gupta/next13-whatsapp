@@ -1,14 +1,12 @@
 'use client';
 
-import { classNames } from "../helpers";
 import { User } from "@prisma/client";
 
 interface AvatarGroupProps {
   users?: User[];
-  large?: boolean;
 };
 
-const AvatarGroup: React.FC<AvatarGroupProps> = ({ users = [], large }) => {
+const AvatarGroup: React.FC<AvatarGroupProps> = ({ users = [] }) => {
   const slicedUsers = users.slice(0, 3);
   
   const positionMap = {

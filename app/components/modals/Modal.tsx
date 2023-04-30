@@ -75,7 +75,17 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
                   sm:p-6
                 "
               >
-                <div className="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
+                <div 
+                  className="
+                    absolute 
+                    right-0 
+                    top-0 
+                    hidden 
+                    pr-4 
+                    pt-4 
+                    sm:block
+                  "
+                >
                   <button
                     type="button"
                     className="

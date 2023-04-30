@@ -1,8 +1,13 @@
 'use client';
 
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import clsx from "clsx";
+import { 
+  FieldErrors, 
+  FieldValues, 
+  UseFormRegister 
+} from "react-hook-form";
 
-interface AuthInputProps {
+interface InputProps {
   label: string;
   id: string;
   type?: string;
@@ -11,7 +16,7 @@ interface AuthInputProps {
   errors: FieldErrors
 }
 
-const AuthInput: React.FC<AuthInputProps> = ({
+const Input: React.FC<InputProps> = ({
   label,
   id,
   register,
@@ -39,7 +44,7 @@ const AuthInput: React.FC<AuthInputProps> = ({
           type={type}
           autoComplete={id}
           {...register(id, { required })}
-          className={`
+          className={clsx(`
             form-input
             block 
             w-full 
@@ -56,13 +61,13 @@ const AuthInput: React.FC<AuthInputProps> = ({
             focus:ring-inset 
             focus:ring-sky-600 
             sm:text-sm 
-            sm:leading-6
-            ${errors[id] ? 'focus:ring-rose-500' : 'focus:ring-sky-600'}
-          `}
+            sm:leading-6`,
+            errors[id] && 'focus:ring-rose-500'
+          )}
         />
       </div>
     </div>
    );
 }
  
-export default AuthInput;
+export default Input;
