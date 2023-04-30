@@ -6,6 +6,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import axios from 'axios';
 import { useParams, useRouter } from 'next/navigation';
 import Modal from '@/app/components/modals/Modal';
+import Button from '@/app/components/Button';
 
 interface ConfirmModalProps {
   isOpen?: boolean;
@@ -76,54 +77,18 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
         </div>
       </div>
       <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-        <button
-          type="button"
-          className="
-            inline-flex 
-            w-full 
-            justify-center 
-            rounded-md 
-            bg-red-600 
-            px-3 
-            py-2 
-            text-sm 
-            font-semibold 
-            text-white 
-            shadow-sm 
-            hover:bg-red-500 
-            sm:ml-3 
-            sm:w-auto
-          "
+        <Button
+          danger
           onClick={onDelete}
         >
           Delete
-        </button>
-        <button
-          type="button"
-          className="
-            mt-3 
-            inline-flex 
-            w-full 
-            justify-center 
-            rounded-md 
-            bg-white 
-            px-3 
-            py-2 
-            text-sm 
-            font-semibold 
-            text-gray-900 
-            shadow-sm 
-            ring-1 
-            ring-inset 
-            ring-gray-300 
-            hover:bg-gray-50 
-            sm:mt-0 
-            sm:w-auto
-          "
+        </Button>
+        <Button
+          secondary
           onClick={onClose}
         >
           Cancel
-        </button>
+        </Button>
       </div>
     </Modal>
   )

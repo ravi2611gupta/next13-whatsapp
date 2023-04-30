@@ -13,6 +13,7 @@ import { User } from '@prisma/client';
 import Input from "../inputs/Input";
 import Select from '../inputs/Select';
 import Modal from './Modal';
+import Button from '../Button';
 
 interface GroupChatModalProps {
   isOpen?: boolean;
@@ -96,18 +97,16 @@ const GroupChatModal: React.FC<GroupChatModalProps> = ({
           </div>
         </div>
         <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button 
+          <Button 
             onClick={onClose} 
-            type="button" 
-            className="text-sm font-semibold leading-6 text-gray-900">
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+            type="button"
+            secondary
           >
+            Cancel
+          </Button>
+          <Button type="submit">
             Create
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>

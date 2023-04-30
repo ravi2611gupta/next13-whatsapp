@@ -1,35 +1,43 @@
+import clsx from "clsx";
+
 interface ButtonProps {
   type?: "button" | "submit" | "reset" | undefined;
   fullWidth?: boolean;
   children?: React.ReactNode;
+  onClick?: () => void;
+  secondary?: boolean;
+  danger?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
   type = "button",
   fullWidth,
-  children
+  children,
+  onClick,
+  secondary,
+  danger
 }) => {
   return ( 
     <button
+      onClick={onClick}
       type={type}
-      className="
+      className={clsx(`
         flex 
-        w-full 
         justify-center 
         rounded-md 
-        bg-sky-500 
         px-3 
         py-2 
         text-sm 
         font-semibold 
-        text-white 
-        shadow-sm 
-        hover:bg-sky-600 
         focus-visible:outline 
         focus-visible:outline-2 
         focus-visible:outline-offset-2 
-        focus-visible:outline-sky-600
-      "
+        `,
+        fullWidth && 'w-full',
+        secondary ? 'text-gray-900' : 'text-white',
+        danger && 'bg-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600',
+        !secondary && !danger && 'bg-sky-500 hover:bg-sky-600 focus-visible:outline-sky-600'
+      )}
     >
       {children}
     </button>

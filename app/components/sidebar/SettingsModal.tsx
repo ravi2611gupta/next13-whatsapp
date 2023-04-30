@@ -9,6 +9,7 @@ import { CldUploadButton } from 'next-cloudinary';
 
 import Input from "../inputs/Input";
 import Modal from '../modals/Modal';
+import Button from '../Button';
 
 interface SettingsModalProps {
   isOpen?: boolean;
@@ -66,7 +67,6 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
 
             <div className="mt-10 flex flex-col gap-y-8">
               <Input label="Name" id="name" errors={errors} required register={register} />
-
               <div>
                 <label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-900">
                   Photo
@@ -74,12 +74,12 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                 <div className="mt-2 flex items-center gap-x-3">
                   <img className="rounded-full h-12 w-12" src={imageUrl || currentUser.imageUrl} />
                   <CldUploadButton options={{ maxFiles: 1 }} onUpload={handleUpload} uploadPreset="pgc9ehd5">
-                    <button
+                    <Button
+                      secondary
                       type="button"
-                      className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     >
                       Change
-                    </button>
+                    </Button>
                   </CldUploadButton>
                 </div>
               </div>
@@ -88,15 +88,12 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
         </div>
 
         <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
+          <Button secondary onClick={onClose}>
             Cancel
-          </button>
-          <button
-            type="submit"
-            className="rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
-          >
+          </Button>
+          <Button type="submit">
             Save
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>

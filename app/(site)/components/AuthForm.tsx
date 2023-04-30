@@ -79,6 +79,7 @@ const AuthForm = () => {
             <Input 
               register={register}
               errors={errors}
+              required
               id="name" 
               label="Name"
             />
@@ -86,6 +87,7 @@ const AuthForm = () => {
           <Input 
             register={register}
             errors={errors}
+            required
             id="email" 
             label="Email address" 
             type="email"
@@ -93,12 +95,13 @@ const AuthForm = () => {
           <Input 
             register={register}
             errors={errors}
+            required
             id="password" 
             label="Password" 
             type="password"
           />
           <div>
-            <Button type="submit">
+            <Button fullWidth type="submit">
               {variant === 'LOGIN' ? 'Sign in' : 'Register'}
             </Button>
           </div>
