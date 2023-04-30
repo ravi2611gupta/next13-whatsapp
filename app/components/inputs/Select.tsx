@@ -7,13 +7,15 @@ interface SelectProps {
   value?: Record<string, any>;
   onChange: (value: Record<string, any>) => void;
   options: Record<string, any>[];
+  disabled?: boolean;
 }
 
 const Select: React.FC<SelectProps> = ({
   label,
   value,
   onChange,
-  options
+  options,
+  disabled,
 }) => {
   return ( 
     <div>
@@ -30,6 +32,7 @@ const Select: React.FC<SelectProps> = ({
       </label>
       <div className="mt-2">
       <ReactSelect
+        isDisabled={disabled}
         value={value}
         onChange={onChange}
         isMulti

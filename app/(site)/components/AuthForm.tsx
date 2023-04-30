@@ -17,6 +17,7 @@ const AuthForm = () => {
   const session = useSession();
   const router = useRouter();
   const [variant, setVariant] = useState<Variant>('LOGIN');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (session?.status === 'authenticated') {
@@ -47,15 +48,25 @@ const AuthForm = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    setIsLoading(true);
+  
     if (variant === 'REGISTER') {
       axios.post('/api/register', data)
-      .then(() => signIn('credentials', data))
-      .then(() => router.push('/conversations'));
+      .then(() => signIn('credentials', {
+        ...data,
+        redirect: false
+      }))
+      .then(() => router.push('/conversations'))
+      .finally(() => setIsLoading(false))
     }
 
     if (variant === 'LOGIN') {
-      signIn('credentials', data)
-      .then(() => router.push('/conversations'));
+      signIn('credentials', {
+        ...data,
+        redirect: false
+      })
+      .then(() => router.push('/conversations'))
+      .finally(() => setIsLoading(false))
     }
   }
 
@@ -76,7 +87,8 @@ const AuthForm = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           {variant === 'REGISTER' && (
-            <Input 
+            <Input
+              disabled={isLoading}
               register={register}
               errors={errors}
               required
@@ -85,6 +97,7 @@ const AuthForm = () => {
             />
           )}
           <Input 
+            disabled={isLoading}
             register={register}
             errors={errors}
             required
@@ -93,6 +106,7 @@ const AuthForm = () => {
             type="email"
           />
           <Input 
+            disabled={isLoading}
             register={register}
             errors={errors}
             required
@@ -101,7 +115,7 @@ const AuthForm = () => {
             type="password"
           />
           <div>
-            <Button fullWidth type="submit">
+            <Button disabled={isLoading} fullWidth type="submit">
               {variant === 'LOGIN' ? 'Sign in' : 'Register'}
             </Button>
           </div>

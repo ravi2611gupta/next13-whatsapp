@@ -1,7 +1,7 @@
 'use client';
 
 import axios from 'axios';
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { 
   FieldValues, 
@@ -27,6 +27,7 @@ const GroupChatModal: React.FC<GroupChatModalProps> = ({
   users = []
 }) => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -46,6 +47,8 @@ const GroupChatModal: React.FC<GroupChatModalProps> = ({
   const members = watch('members');
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    setIsLoading(true);
+  
     axios.post('/api/conversations', {
       ...data,
       isGroup: true
@@ -54,6 +57,7 @@ const GroupChatModal: React.FC<GroupChatModalProps> = ({
       router.refresh();
       onClose();
     })
+    .finally(() => setIsLoading(false));
   }
 
   return (
@@ -75,14 +79,16 @@ const GroupChatModal: React.FC<GroupChatModalProps> = ({
               Create a chat with more than 2 people.
             </p>
             <div className="mt-10 flex flex-col gap-y-8">
-              <Input 
+              <Input
+                disabled={isLoading}
                 label="Name" 
                 id="name" 
                 errors={errors} 
                 required 
                 register={register}
               />
-              <Select 
+              <Select
+                disabled={isLoading}
                 label="Members" 
                 options={users.map((user) => ({ 
                   value: user.id, 
@@ -97,14 +103,15 @@ const GroupChatModal: React.FC<GroupChatModalProps> = ({
           </div>
         </div>
         <div className="mt-6 flex items-center justify-end gap-x-6">
-          <Button 
+          <Button
+            disabled={isLoading}
             onClick={onClose} 
             type="button"
             secondary
           >
             Cancel
           </Button>
-          <Button type="submit">
+          <Button disabled={isLoading} type="submit">
             Create
           </Button>
         </div>
