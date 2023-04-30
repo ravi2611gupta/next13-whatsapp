@@ -28,7 +28,9 @@ export async function POST(
           isGroup,
           users: {
             connect: [
-              ...members.map((member: { value: string }) => ({  id: member.value })),
+              ...members.map((member: { value: string }) => ({  
+                id: member.value 
+              })),
               {
                 id: currentUser.id
               }
@@ -52,9 +54,18 @@ export async function POST(
 
     const existingConversations = await prisma.conversation.findMany({
       where: {
-        userIds: {
-          equals: [currentUser.id, userId]
-        }
+        OR: [
+          {
+            userIds: {
+              equals: [currentUser.id, userId]
+            }
+          },
+          {
+            userIds: {
+              equals: [userId, currentUser.id]
+            }
+          }
+        ]
       }
     });
 

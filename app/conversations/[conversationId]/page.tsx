@@ -4,6 +4,7 @@ import getMessages from "@/app/actions/getMessages";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import Form from "./components/Form";
+import EmptyState from "@/app/components/EmptyState";
 
 interface IParams {
   conversationId: string;
@@ -15,7 +16,11 @@ const ChatId = async ({ params }: { params: IParams }) => {
 
   if (!conversation) {
     return (
-      <p>Something went wrong!</p>
+      <div className="lg:pl-80 h-full">
+        <div className="h-full flex flex-col">
+          <EmptyState />
+        </div>
+      </div>
     )
   }
 

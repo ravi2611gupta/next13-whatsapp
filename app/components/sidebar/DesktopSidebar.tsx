@@ -25,7 +25,7 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
         lg:fixed 
         lg:inset-y-0 
         lg:left-0 
-        lg:z-50 
+        lg:z-40 
         lg:w-20 
         xl:px-6
         lg:overflow-y-auto 
