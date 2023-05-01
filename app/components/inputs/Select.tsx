@@ -18,7 +18,7 @@ const Select: React.FC<SelectProps> = ({
   disabled,
 }) => {
   return ( 
-    <div>
+    <div className="z-[100]">
       <label
         className="
           block 
@@ -37,6 +37,10 @@ const Select: React.FC<SelectProps> = ({
         onChange={onChange}
         isMulti
         options={options}
+        menuPortalTarget={document.body}
+        styles={{
+          menuPortal: (base) => ({ ...base, zIndex: 9999 })
+        }}
         classNames={{
           control: () => 'text-sm',
         }}
