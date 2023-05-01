@@ -2,7 +2,7 @@
 
 import React, { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import {  XMarkIcon } from '@heroicons/react/24/outline'
+import { IoClose } from 'react-icons/io5'
 
 interface ModalProps {
   isOpen?: boolean;
@@ -84,6 +84,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
                     pr-4 
                     pt-4 
                     sm:block
+                    z-10
                   "
                 >
                   <button
@@ -101,7 +102,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
                     onClick={onClose}
                   >
                     <span className="sr-only">Close</span>
-                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                    <IoClose className="h-6 w-6" aria-hidden="true" />
                   </button>
                 </div>
                 {children}

@@ -10,6 +10,7 @@ import { CldUploadButton } from 'next-cloudinary';
 import Input from "../inputs/Input";
 import Modal from '../modals/Modal';
 import Button from '../Button';
+import Image from 'next/image';
 
 interface SettingsModalProps {
   isOpen?: boolean;
@@ -101,9 +102,12 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                   Photo
                 </label>
                 <div className="mt-2 flex items-center gap-x-3">
-                  <img 
-                    className="rounded-full h-12 w-12" 
-                    src={image || currentUser.image} 
+                  <Image
+                    width="48"
+                    height="48" 
+                    className="rounded-full" 
+                    src={image || currentUser.image}
+                    alt="Avatar"
                   />
                   <CldUploadButton 
                     options={{ maxFiles: 1 }} 

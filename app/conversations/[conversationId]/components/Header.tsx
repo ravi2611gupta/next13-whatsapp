@@ -1,6 +1,7 @@
 'use client';
 
-import { ChevronLeftIcon, EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
+import { HiChevronLeft } from 'react-icons/hi'
+import { HiEllipsisHorizontal } from 'react-icons/hi2';
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Conversation, User } from "@prisma/client";
@@ -15,7 +16,7 @@ import ProfileDrawer from "./ProfileDrawer";
 interface HeaderProps {
   conversation: Conversation & {
     users: User[]
-  };
+  }
 }
 
 const Header: React.FC<HeaderProps> = ({ conversation }) => {
@@ -66,7 +67,7 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
             cursor-pointer
           "
         >
-          <ChevronLeftIcon className="h-6" />
+          <HiChevronLeft size={32} />
         </Link>
         {conversation.isGroup ? (
           <AvatarGroup users={conversation.users} />
@@ -80,10 +81,10 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
           </div>
         </div>
       </div>
-      <EllipsisHorizontalIcon 
+      <HiEllipsisHorizontal
+        size={32}
         onClick={() => setDrawerOpen(true)}
         className="
-          h-8
           text-sky-500
           cursor-pointer
           hover:text-sky-600

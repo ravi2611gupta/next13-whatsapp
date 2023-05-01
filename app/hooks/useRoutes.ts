@@ -1,32 +1,34 @@
 import { useMemo } from "react";
-import { useParams, usePathname } from "next/navigation";
-import { ArrowLeftOnRectangleIcon, ChatBubbleOvalLeftIcon, UsersIcon } from "@heroicons/react/24/solid";
+import { usePathname } from "next/navigation";
+import { HiChat } from 'react-icons/hi';
+import { HiArrowLeftOnRectangle, HiUsers } from 'react-icons/hi2';
 import { signOut } from "next-auth/react";
+import useConversation from "./useConversation";
 
 const useRoutes = () => {
   const pathname = usePathname();
-  const params = useParams();
+  const { conversationId } = useConversation();
 
   const routes = useMemo(() => [
     { 
       label: 'Chat', 
       href: '/conversations', 
-      icon: ChatBubbleOvalLeftIcon,
-      active: pathname === '/conversations' || !!params.conversationId
+      icon: HiChat,
+      active: pathname === '/conversations' || !!conversationId
     },
     { 
       label: 'Users', 
       href: '/users', 
-      icon: UsersIcon, 
+      icon: HiUsers, 
       active: pathname === '/users'
     },
     {
       label: 'Logout', 
       onClick: () => signOut(),
       href: '#',
-      icon: ArrowLeftOnRectangleIcon, 
+      icon: HiArrowLeftOnRectangle, 
     }
-  ], [pathname, params]);
+  ], [pathname, conversationId]);
 
   return routes;
 };

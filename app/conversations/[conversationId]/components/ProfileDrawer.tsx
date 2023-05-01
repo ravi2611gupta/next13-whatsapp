@@ -2,8 +2,7 @@
 
 import { Fragment, useMemo, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { TrashIcon } from '@heroicons/react/24/solid';
+import { IoClose, IoTrash } from 'react-icons/io5'
 import { Conversation, User } from '@prisma/client';
 import { format } from 'date-fns';
 
@@ -92,7 +91,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                               onClick={onClose}
                             >
                               <span className="sr-only">Close panel</span>
-                              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                              <IoClose size={24} aria-hidden="true" />
                             </button>
                           </div>
                         </div>
@@ -111,7 +110,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                           <div className="flex gap-10 my-8">
                             <div onClick={() => setConfirmOpen(true)} className="flex flex-col gap-3 items-center cursor-pointer hover:opacity-75">
                               <div className="w-10 h-10 bg-neutral-100 rounded-full flex items-center justify-center">
-                                <TrashIcon className="h-5" />
+                                <IoTrash size={20} />
                               </div>
                               <div className="text-sm font-light text-neutral-600">
                                 Delete

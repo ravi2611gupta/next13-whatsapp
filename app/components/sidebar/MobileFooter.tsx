@@ -1,12 +1,12 @@
 'use client';
 
-import useChat from "@/app/hooks/useChat";
+import useConversation from "@/app/hooks/useConversation";
 import useRoutes from "@/app/hooks/useRoutes";
 import MobileItem from "./MobileItem";
 
 const MobileFooter = () => {
   const routes = useRoutes();
-  const { isOpen } = useChat();
+  const { isOpen } = useConversation();
 
   if (isOpen) {
     return null;

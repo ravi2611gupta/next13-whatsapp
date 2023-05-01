@@ -1,26 +1,22 @@
 'use client';
 
-import { useSession } from "next-auth/react";
 import axios from "axios";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useParams } from "next/navigation";
-import {  Message, User } from "@prisma/client";
+import { useEffect, useRef, useState } from "react";
 
 import { pusherClient } from "@/app/libs/pusher";
+import useConversation from "@/app/hooks/useConversation";
 import MessageBox from "./MessageBox";
-
-type MessageType = Message & { sender: User, seen: User[] };
+import { FullMessageType } from "@/app/types";
 
 interface BodyProps {
-  initialMessages: MessageType[];
+  initialMessages: FullMessageType[];
 }
 
 const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
-  const session = useSession();
   const bottomRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState(initialMessages);
-  const params = useParams();
-  const { conversationId } = params;
+  
+  const { conversationId } = useConversation();
 
   useEffect(() => {
     axios.post(`/api/conversations/${conversationId}/seen`);
@@ -30,7 +26,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
     pusherClient.subscribe(conversationId)
     bottomRef?.current?.scrollIntoView();
 
-    const messageHandler = (message: MessageType) => {
+    const messageHandler = (message: FullMessageType) => {
       axios.post(`/api/conversations/${conversationId}/seen`);
 
       setMessages((current) => [...current, message]);
@@ -38,7 +34,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
       bottomRef?.current?.scrollIntoView();
     };
 
-    const updateMessageHandler = (newMessage: MessageType) => {
+    const updateMessageHandler = (newMessage: FullMessageType) => {
       setMessages((current) => current.map((currentMessage) => {
         if (currentMessage.id === newMessage.id) {
           return newMessage;

@@ -1,9 +1,9 @@
 'use client';
 
 import { 
-  PaperAirplaneIcon, 
-  PhotoIcon 
-} from "@heroicons/react/24/solid";
+  HiPaperAirplane, 
+  HiPhoto
+} from "react-icons/hi2";
 import MessageInput from "./MessageInput";
 import { 
   FieldValues, 
@@ -11,12 +11,11 @@ import {
   useForm 
 } from "react-hook-form";
 import axios from "axios";
-import { useParams } from "next/navigation";
 import { CldUploadButton } from "next-cloudinary";
+import useConversation from "@/app/hooks/useConversation";
 
 const Form = () => {
-  const params = useParams();
-  const { conversationId } = params;
+  const { conversationId } = useConversation();
 
   const {
     register,
@@ -65,7 +64,7 @@ const Form = () => {
         onUpload={handleUpload} 
         uploadPreset="pgc9ehd5"
       >
-        <PhotoIcon className="h-10 text-sky-500" />
+        <HiPhoto size={30} className="text-sky-500" />
       </CldUploadButton>
       <form 
         onSubmit={handleSubmit(onSubmit)} 
@@ -89,8 +88,9 @@ const Form = () => {
             transition
           "
         >
-          <PaperAirplaneIcon 
-            className="lg:h-5 h-4 text-white"
+          <HiPaperAirplane
+            size={18}
+            className="text-white"
           />
         </button>
       </form>

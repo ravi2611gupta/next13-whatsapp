@@ -1,22 +1,20 @@
 'use client';
 
 import { Conversation, Message, User } from "@prisma/client";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
 import { MdOutlineGroupAdd } from 'react-icons/md';
 import clsx from "clsx";
 
-import useChat from "@/app/hooks/useChat";
+import useConversation from "@/app/hooks/useConversation";
 import { pusherClient } from "@/app/libs/pusher";
 import GroupChatModal from "@/app/components/modals/GroupChatModal";
 import ConversationBox from "./ConversationBox";
+import { FullConversationType } from "@/app/types";
 
 interface ConversationListProps {
-  initialItems: (Conversation & { 
-    users: User[]; 
-    messages: Message[] 
-  })[];
+  initialItems: FullConversationType[];
   users: User[];
   title?: string;
 }
@@ -29,11 +27,9 @@ const [items, setItems] = useState(initialItems);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const router = useRouter();
-  const params = useParams();
-  const { isOpen } = useChat();
   const session = useSession();
 
-  const { conversationId } = params;
+  const { conversationId, isOpen } = useConversation();
 
   const pusherKey = useMemo(() => {
     return session.data?.user?.email
@@ -46,10 +42,7 @@ const [items, setItems] = useState(initialItems);
 
     pusherClient.subscribe(pusherKey);
 
-    const updateHandler = (conversation: Conversation & { 
-      users: User[]; 
-      messages: Message[] 
-    }) => {
+    const updateHandler = (conversation: FullConversationType) => {
       setItems((current) => current.map((currentConversation) => {
         if (currentConversation.id === conversation.id) {
           return {
@@ -62,10 +55,7 @@ const [items, setItems] = useState(initialItems);
       }));
     }
 
-    const newHandler = (conversation: Conversation & { 
-      users: User[]; 
-      messages: Message[] 
-    }) => {
+    const newHandler = (conversation: FullConversationType) => {
       setItems((current) => [conversation, ...current]);
     }
 

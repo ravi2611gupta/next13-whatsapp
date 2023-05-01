@@ -3,6 +3,7 @@
 import { User } from "@prisma/client";
 
 import useActiveList from "../hooks/useActiveList";
+import Image from "next/image";
 
 interface AvatarProps {
   user?: User;
@@ -24,9 +25,10 @@ const Avatar: React.FC<AvatarProps> = ({ user }) => {
         md:h-11 
         md:w-11
       ">
-        <img
+        <Image
+          fill
           src={user?.image || '/images/placeholder.jpg'}
-          alt=""
+          alt="Avatar"
         />
       </div>
       {isActive ? (

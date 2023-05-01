@@ -2,11 +2,12 @@
 
 import React, { useCallback } from 'react'
 import { Dialog } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import { FiAlertTriangle } from 'react-icons/fi'
 import axios from 'axios';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Modal from '@/app/components/modals/Modal';
 import Button from '@/app/components/Button';
+import useConversation from '@/app/hooks/useConversation';
 
 interface ConfirmModalProps {
   isOpen?: boolean;
@@ -17,9 +18,8 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   isOpen, 
   onClose 
 }) => {
-  const params = useParams();
   const router = useRouter();
-  const { conversationId } = params;
+  const { conversationId } = useConversation();
   
   const onDelete = useCallback(() => {
     axios.delete(`/api/conversations/${conversationId}`)
@@ -49,7 +49,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
             sm:w-10
           "
         >
-          <ExclamationTriangleIcon 
+          <FiAlertTriangle 
             className="h-6 w-6 text-red-600" 
             aria-hidden="true"
           />

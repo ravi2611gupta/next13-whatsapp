@@ -1,19 +1,17 @@
 'use client';
 
-import { useState } from "react";
-import { Message, User } from "@prisma/client";
-import { format } from "date-fns";
 import clsx from "clsx";
+import Image from "next/image";
+import { useState } from "react";
+import { format } from "date-fns";
 import { useSession } from "next-auth/react";
+import { FullMessageType } from "@/app/types";
 
 import Avatar from "@/app/components/Avatar";
 import ImageModal from "./ImageModal";
 
 interface MessageBoxProps {
-  data: Message & {
-    sender: User,
-    seen: User[]
-  };
+  data: FullMessageType;
   isLast?: boolean;
 }
 
@@ -57,12 +55,13 @@ const MessageBox: React.FC<MessageBoxProps> = ({
         <div className={message}>
           <ImageModal src={data.image} isOpen={imageModalOpen} onClose={() => setImageModalOpen(false)} />
           {data.image ? (
-            <img 
+            <Image
+              alt="Image"
+              height="288"
+              width="288"
               onClick={() => setImageModalOpen(true)} 
               src={data.image} 
               className="
-                h-72 
-                w-72 
                 object-cover 
                 cursor-pointer 
                 hover:scale-110 

@@ -2,11 +2,11 @@
 
 import clsx from "clsx";
 
-import useChat from "../hooks/useChat";
+import useConversation from "../hooks/useConversation";
 import EmptyState from "../components/EmptyState";
 
 const Home = () => {
-  const { isOpen } = useChat();
+  const { isOpen } = useConversation();
 
   return (
     <div className={clsx(

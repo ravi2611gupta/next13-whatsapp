@@ -1,3 +1,4 @@
+import Image from "next/image";
 import AuthForm from "./components/AuthForm";
 
 const Auth = () => {
@@ -15,10 +16,12 @@ const Auth = () => {
       "
     >
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <img
-          className="mx-auto h-12 w-auto"
+        <Image
+          height="48"
+          width="48"
+          className="mx-auto w-auto"
           src="/images/logo.png"
-          alt="Your Company"
+          alt="Logo"
         />
         <h2 
           className="
