@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
 import { MdOutlineGroupAdd } from 'react-icons/md';
 import clsx from "clsx";
-import { uniq } from 'lodash';
+import { find, uniq } from 'lodash';
 
 import useConversation from "@/app/hooks/useConversation";
 import { pusherClient } from "@/app/libs/pusher";
@@ -58,7 +58,10 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
     const newHandler = (conversation: FullConversationType) => {
       setItems((current) => {
-        console.log('NEW CONVERSATION', conversation, [conversation, ...current])
+        if (find(current, { id: conversation.id })) {
+          return current;
+        }
+
         return [conversation, ...current]
       });
     }
