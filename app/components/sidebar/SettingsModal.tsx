@@ -22,10 +22,12 @@ interface SettingsModalProps {
 const SettingsModal: React.FC<SettingsModalProps> = ({ 
   isOpen, 
   onClose, 
-  currentUser
+  currentUser = {}
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+
+  console.log(currentUser, '&TEST_CURRENT_USER')
 
   const {
     register,
@@ -37,8 +39,8 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
     }
   } = useForm<FieldValues>({
     defaultValues: {
-      name: currentUser.name,
-      image: currentUser.image
+      name: currentUser?.name,
+      image: currentUser?.image
     }
   });
 
@@ -108,7 +110,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                     width="48"
                     height="48" 
                     className="rounded-full" 
-                    src={image || currentUser.image}
+                    src={image || currentUser?.image || '/images/placeholder.jpg'}
                     alt="Avatar"
                   />
                   <CldUploadButton 
