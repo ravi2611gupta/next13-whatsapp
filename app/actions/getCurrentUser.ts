@@ -1,9 +1,7 @@
-import { cache } from "react";
-
 import prisma from "@/app/libs/prismadb";
 import getSession from "./getSession";
 
-const getCurrentUser = cache(async () => {
+const getCurrentUser = async () => {
   try {
     const session = await getSession();
 
@@ -25,6 +23,6 @@ const getCurrentUser = cache(async () => {
   } catch (error: any) {
     return null;
   }
-});
+};
 
 export default getCurrentUser;

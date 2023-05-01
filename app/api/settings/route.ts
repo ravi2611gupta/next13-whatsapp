@@ -11,7 +11,7 @@ export async function POST(
     const body = await request.json();
     const {
       name,
-      imageUrl,
+      image,
     } = body;
 
     if (!currentUser?.id) {
@@ -23,7 +23,7 @@ export async function POST(
         id: currentUser.id
       },
       data: {
-        imageUrl: imageUrl,
+        image: image,
         name: name
       },
     });

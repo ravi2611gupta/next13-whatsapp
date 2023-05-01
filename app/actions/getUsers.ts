@@ -1,9 +1,7 @@
-import { cache } from "react";
-
 import prisma from "@/app/libs/prismadb";
 import getSession from "./getSession";
 
-const getUsers = cache(async () => {
+const getUsers = async () => {
   const session = await getSession();
 
   if (!session?.user?.email) {
@@ -26,6 +24,6 @@ const getUsers = cache(async () => {
   } catch (error: any) {
     return [];
   }
-});
+};
 
 export default getUsers;

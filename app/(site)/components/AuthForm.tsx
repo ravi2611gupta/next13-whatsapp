@@ -70,6 +70,14 @@ const AuthForm = () => {
     }
   }
 
+  const socialAction = (action: string) => {
+    setIsLoading(true);
+
+    signIn(action, { redirect: false })
+      .then(() => router.push('/conversations'))
+      .finally(() => setIsLoading(false));
+  } 
+
   return ( 
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div 
@@ -141,9 +149,18 @@ const AuthForm = () => {
           </div>
 
           <div className="mt-6 grid grid-cols-3 gap-3">
-            <AuthSocialButton icon={BsFacebook} />
-            <AuthSocialButton icon={BsTwitter} />
-            <AuthSocialButton icon={BsGithub} />
+            <AuthSocialButton 
+              icon={BsFacebook}
+              onClick={() => socialAction('github')}
+            />
+            <AuthSocialButton 
+              icon={BsTwitter} 
+              onClick={() => socialAction('github')} 
+            />
+            <AuthSocialButton 
+              icon={BsGithub} 
+              onClick={() => socialAction('github')} 
+            />
           </div>
         </div>
         <div 

@@ -37,7 +37,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({
   const message = clsx(
     'text-sm w-fit overflow-hidden', 
     isOwn ? 'bg-sky-500 text-white' : 'bg-gray-100', 
-    data.imageUrl ? 'rounded-md p-0' : 'rounded-full py-2 px-3'
+    data.image ? 'rounded-md p-0' : 'rounded-full py-2 px-3'
   );
 
   return ( 
@@ -55,11 +55,11 @@ const MessageBox: React.FC<MessageBoxProps> = ({
           </div>
         </div>
         <div className={message}>
-          <ImageModal src={data.imageUrl} isOpen={imageModalOpen} onClose={() => setImageModalOpen(false)} />
-          {data.imageUrl ? (
+          <ImageModal src={data.image} isOpen={imageModalOpen} onClose={() => setImageModalOpen(false)} />
+          {data.image ? (
             <img 
               onClick={() => setImageModalOpen(true)} 
-              src={data.imageUrl} 
+              src={data.image} 
               className="
                 h-72 
                 w-72 

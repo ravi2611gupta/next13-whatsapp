@@ -1,9 +1,7 @@
-import { cache } from "react";
-
 import prisma from "@/app/libs/prismadb";
 import getCurrentUser from "./getCurrentUser";
 
-const getConversationById = cache(async (
+const getConversationById = async (
   conversationId: string
 ) => {
   try {
@@ -28,6 +26,6 @@ const getConversationById = cache(async (
     console.log(error, 'SERVER_ERROR')
     return null;
   }
-});
+};
 
 export default getConversationById;

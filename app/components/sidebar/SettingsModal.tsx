@@ -36,14 +36,14 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
   } = useForm<FieldValues>({
     defaultValues: {
       name: currentUser.name,
-      imageUrl: currentUser.imageUrl
+      image: currentUser.image
     }
   });
 
-  const imageUrl = watch('imageUrl');
+  const image = watch('image');
 
   const handleUpload = (result: any) => {
-    setValue('imageUrl', result.info.secure_url, { 
+    setValue('image', result.info.secure_url, { 
       shouldValidate: true 
     });
   }
@@ -103,7 +103,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                 <div className="mt-2 flex items-center gap-x-3">
                   <img 
                     className="rounded-full h-12 w-12" 
-                    src={imageUrl || currentUser.imageUrl} 
+                    src={image || currentUser.image} 
                   />
                   <CldUploadButton 
                     options={{ maxFiles: 1 }} 

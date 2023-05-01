@@ -12,7 +12,7 @@ export async function POST(
     const body = await request.json();
     const {
       message,
-      imageUrl,
+      image,
       conversationId
     } = body;
 
@@ -27,7 +27,7 @@ export async function POST(
       },
       data: {
         body: message,
-        imageUrl: imageUrl,
+        image: image,
         conversation: {
           connect: { id: conversationId }
         },
@@ -42,14 +42,18 @@ export async function POST(
       }
     });
 
-    await pusherServer.trigger(conversationId, 'messages:new', newMessage);
-
+    
     const updatedConversation = await prisma.conversation.update({
       where: {
         id: conversationId
       },
       data: {
         lastMessageAt: new Date(),
+        messages: {
+          connect: {
+            id: newMessage.id
+          }
+        }
       },
       include: {
         users: true,
@@ -60,6 +64,8 @@ export async function POST(
         }
       }
     });
+
+    await pusherServer.trigger(conversationId, 'messages:new', newMessage);
 
     const lastMessage = updatedConversation.messages[updatedConversation.messages.length - 1];
 

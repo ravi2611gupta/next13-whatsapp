@@ -25,7 +25,7 @@ const Avatar: React.FC<AvatarProps> = ({ user }) => {
         md:w-11
       ">
         <img
-          src={user?.imageUrl || '/images/placeholder.jpg'}
+          src={user?.image || '/images/placeholder.jpg'}
           alt=""
         />
       </div>

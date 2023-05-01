@@ -1,8 +1,6 @@
-import { cache } from "react";
-
 import prisma from "@/app/libs/prismadb";
 
-const getMessages = cache(async (
+const getMessages = async (
   conversationId: string
 ) => {
   try {
@@ -23,6 +21,6 @@ const getMessages = cache(async (
   } catch (error: any) {
     return [];
   }
-});
+};
 
 export default getMessages;
