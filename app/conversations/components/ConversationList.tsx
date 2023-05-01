@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
 import { MdOutlineGroupAdd } from 'react-icons/md';
 import clsx from "clsx";
+import { uniq } from 'lodash';
 
 import useConversation from "@/app/hooks/useConversation";
 import { pusherClient } from "@/app/libs/pusher";
@@ -56,7 +57,7 @@ const [items, setItems] = useState(initialItems);
     }
 
     const newHandler = (conversation: FullConversationType) => {
-      setItems((current) => [conversation, ...current]);
+      setItems((current) => uniq([conversation, ...current]));
     }
 
     pusherClient.bind('conversation:update', updateHandler)
