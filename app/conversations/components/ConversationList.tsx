@@ -57,7 +57,10 @@ const ConversationList: React.FC<ConversationListProps> = ({
     }
 
     const newHandler = (conversation: FullConversationType) => {
-      setItems((current) => [conversation, ...current]);
+      setItems((current) => {
+        console.log('NEW CONVERSATION', conversation, [conversation, ...current])
+        return [conversation, ...current]
+      });
     }
 
     pusherClient.bind('conversation:update', updateHandler)
