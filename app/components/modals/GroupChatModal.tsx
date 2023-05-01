@@ -14,6 +14,7 @@ import Input from "../inputs/Input";
 import Select from '../inputs/Select';
 import Modal from './Modal';
 import Button from '../Button';
+import { toast } from 'react-hot-toast';
 
 interface GroupChatModalProps {
   isOpen?: boolean;
@@ -57,6 +58,7 @@ const GroupChatModal: React.FC<GroupChatModalProps> = ({
       router.refresh();
       onClose();
     })
+    .catch(() => toast.error('Something went wrong!'))
     .finally(() => setIsLoading(false));
   }
 

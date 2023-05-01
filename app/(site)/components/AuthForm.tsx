@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import Input from "@/app/components/inputs/Input";
 import AuthSocialButton from './AuthSocialButton';
 import Button from "@/app/components/Button";
+import { toast } from "react-hot-toast";
 
 type Variant = 'LOGIN' | 'REGISTER';
 
@@ -54,9 +55,18 @@ const AuthForm = () => {
       axios.post('/api/register', data)
       .then(() => signIn('credentials', {
         ...data,
-        redirect: false
+        redirect: false,
       }))
-      .then(() => router.push('/conversations'))
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error('Invalid credentials!');
+        }
+
+        if (callback?.ok) {
+          router.push('/conversations')
+        }
+      })
+      .catch(() => toast.error('Something went wrong!'))
       .finally(() => setIsLoading(false))
     }
 
@@ -65,7 +75,15 @@ const AuthForm = () => {
         ...data,
         redirect: false
       })
-      .then(() => router.push('/conversations'))
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error('Invalid credentials!');
+        }
+
+        if (callback?.ok) {
+          router.push('/conversations')
+        }
+      })
       .finally(() => setIsLoading(false))
     }
   }
@@ -74,7 +92,15 @@ const AuthForm = () => {
     setIsLoading(true);
 
     signIn(action, { redirect: false })
-      .then(() => router.push('/conversations'))
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error('Invalid credentials!');
+        }
+
+        if (callback?.ok) {
+          router.push('/conversations')
+        }
+      })
       .finally(() => setIsLoading(false));
   } 
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { Conversation, Message, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { FiAlertTriangle } from 'react-icons/fi'
 import axios from 'axios';
@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import Modal from '@/app/components/modals/Modal';
 import Button from '@/app/components/Button';
 import useConversation from '@/app/hooks/useConversation';
+import { toast } from 'react-hot-toast';
 
 interface ConfirmModalProps {
   isOpen?: boolean;
@@ -20,14 +21,19 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
 }) => {
   const router = useRouter();
   const { conversationId } = useConversation();
+  const [isLoading, setIsLoading] = useState(false);
   
   const onDelete = useCallback(() => {
+    setIsLoading(true);
+
     axios.delete(`/api/conversations/${conversationId}`)
     .then(() => {
       onClose();
       router.push('/conversations');
       router.refresh();
     })
+    .catch(() => toast.error('Something went wrong!'))
+    .finally(() => setIsLoading(false))
   }, [router, conversationId, onClose]);
 
   return (
@@ -78,12 +84,14 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
       </div>
       <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
         <Button
+          disabled={isLoading}
           danger
           onClick={onDelete}
         >
           Delete
         </Button>
         <Button
+          disabled={isLoading}
           secondary
           onClick={onClose}
         >
