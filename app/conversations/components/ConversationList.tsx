@@ -24,7 +24,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
   initialItems, 
   users
 }) => {
-const [items, setItems] = useState(initialItems);
+  const [items, setItems] = useState(initialItems);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const router = useRouter();
@@ -57,7 +57,7 @@ const [items, setItems] = useState(initialItems);
     }
 
     const newHandler = (conversation: FullConversationType) => {
-      setItems((current) => uniq([conversation, ...current]));
+      setItems((current) => [conversation, ...current]);
     }
 
     pusherClient.bind('conversation:update', updateHandler)
